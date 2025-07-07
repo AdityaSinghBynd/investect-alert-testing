@@ -6,6 +6,8 @@ import { useQueryClient } from "@tanstack/react-query";
 export const useQueryUtils = () => {
   const queryClient = useQueryClient();
 
+  
+
   /**
    * Clear all query cache data
    */
@@ -23,6 +25,6 @@ export const useQueryUtils = () => {
   return {
     clearQueryCache,
     setQueryData,
-    queryClient,
+    queryClient, // export the queryClient for advanced use cases if needed
   };
 }; 

@@ -1,12 +1,57 @@
+"use client"
+
 import React from 'react'
+import Image from 'next/image';
+import { format, subDays } from 'date-fns';
+import { useParams, useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+// Hooks
+import { useFetchReceivedAlertsByCompanyID } from '@/hooks/Newsletter/useNewsletter'
+import { FetchReceivedAlertsByCompanyIDPayload } from '@/hooks/Newsletter/newsletter.interface';
+// Components
+import CompanyNews from '@/components/NewsLetterComponents/Companies/CompanyNews';
+import { Button } from '@/components/ui/button';
+import { ArrowLeftIcon } from 'lucide-react';
 
 export default function CompanyPage() {
+  const { data: session } = useSession();
+  const router = useRouter();
+  const { slug: alertId, companyID } = useParams();
+  const endDate = format(new Date(), 'yyyy-MM-dd');
+  const startDate = format(subDays(new Date(), 10), 'yyyy-MM-dd');
+
+  const payload: FetchReceivedAlertsByCompanyIDPayload = {
+    user_id: session?.user?.id || "",
+    alert_id: alertId as string,
+    start_date: startDate, // Last 10 days
+    end_date: endDate,
+    company_ids: [companyID as string]
+  };
+
+  const {
+    data: receivedAlertsDataByCompanyID,
+    isLoading: receivedAlertsDataByCompanyIDLoading,
+    isError: receivedAlertsDataByCompanyIDError
+  } = useFetchReceivedAlertsByCompanyID(payload);
+
   return (
     <main className='flex bg-[#eaf0fc] min-h-screen w-full'>
       <div className="w-full bg-[#FFFFFFCC] m-3 rounded-lg py-3 px-6 shadow-custom-blue-left">
 
-        <h1 className="text-3xl font-medium text-[#001742] mb-5">Newsletter</h1>
+        {/* Header */}
+        <header className='flex items-center justify-start gap-2 w-full py-4'>
+          <ArrowLeftIcon className="w-6 h-6 cursor-pointer" onClick={() => router.back()} />
+          <h1 className="flex items-center gap-2 text-xl font-medium text-[#001742]">
+            <Image src={receivedAlertsDataByCompanyID?.runs[0]?.companies[0]?.logo} alt="Company Logo" width={24} height={24} />
+            {receivedAlertsDataByCompanyID?.runs[0]?.companies[0]?.name}
+            </h1>
+        </header>
 
+        {/* Main Content */}
+        <CompanyNews
+          data={receivedAlertsDataByCompanyID}
+          isLoading={receivedAlertsDataByCompanyIDLoading}
+        />
       </div>
     </main>
   )

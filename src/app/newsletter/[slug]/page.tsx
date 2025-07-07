@@ -1,6 +1,8 @@
 "use client";
 
 import React from 'react'
+import { format, subDays } from 'date-fns';
+import { useSession } from 'next-auth/react';
 // Images
 import { Building2Icon, History, Settings } from 'lucide-react'
 // Components
@@ -12,12 +14,27 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { RootState } from '@/redux/store';
 import { useSelector } from 'react-redux';
 // Hooks
-import { useFetchSingleNewsletterData } from '@/hooks/Newsletter/useNewsletter';
+import { useFetchReceivedAlertsByDate, useFetchSingleNewsletterData } from '@/hooks/Newsletter/useNewsletter';
 
 export default function NewsletterPage() {
+    const { data: session } = useSession();
     const { activeNewsletter } = useSelector((state: RootState) => state.newsletter);
     const { data: newsletterData, isLoading: isNewsletterDataLoading } = useFetchSingleNewsletterData(activeNewsletter?.alert_id);
 
+    // Get today's date and 10 days before
+    const endDate = format(new Date(), 'yyyy-MM-dd');
+    const startDate = format(subDays(new Date(), 10), 'yyyy-MM-dd');
+
+    const payload = {
+        user_id: session?.user?.id || "",
+        alert_id: activeNewsletter?.alert_id || "",
+        start_date: startDate,
+        end_date: endDate
+    }
+    const { data: receivedAlertsDataByDate, isLoading: receivedAlertsDataByDateLoading, isError: receivedAlertsByDateError } = useFetchReceivedAlertsByDate(payload, {
+        enabled: !!activeNewsletter?.alert_id
+    });
+    
     return (
         <main className='flex bg-[#eaf0fc] min-h-screen w-full overflow-hidden'>
             <div className="w-full bg-[#FFFFFFCC] m-3 rounded-lg py-3 px-6 shadow-custom-blue-left">
@@ -41,16 +58,19 @@ export default function NewsletterPage() {
                         </TabsTrigger>
                     </TabsList>
 
-                    {/* History */} 
+                    {/* History */}
                     <TabsContent value="history">
-                        <HistoryComponent />
+                        <HistoryComponent
+                            receivedAlertsDataByDate={receivedAlertsDataByDate}
+                            receivedAlertsDataByDateLoading={receivedAlertsDataByDateLoading}
+                        />
                     </TabsContent>
 
                     {/* Companies */}
                     <TabsContent value="companies" className='h-[calc(100vh-100px)] overflow-y-auto scrollbar-hide pb-[100px]'>
                         <CompaniesComponent
-                         companiesData={newsletterData?.companies}
-                         alertId={activeNewsletter?.alert_id}
+                            companiesData={newsletterData?.companies}
+                            alertId={activeNewsletter?.alert_id}
                         />
                     </TabsContent>
 
