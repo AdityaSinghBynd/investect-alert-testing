@@ -3,8 +3,10 @@ import type { Config } from "tailwindcss";
 export default {
   darkMode: ["class"],
   content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/features/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -49,11 +51,31 @@ export default {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+        layer: {
+          "1": "var(--Layer01)",
+          "2": "var(--Layer02)",
+          "3": "var(--Layer03)",
+        },
+        text: {
+          primary: "var(--TextPrimary)",
+          secondary: "var(--TextSecondary)",
+          placeholder: "var(--TextPlaceholder)",
+          error: "var(--TextError)",
+        },
+        button: {
+          primary: "var(--ButtonPrimary)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      borderWidth: {
+        subtle: "var(--BorderSubtle01)",
+      },
+      borderColor: {
+        subtle: "#eaf0fc",
       },
       boxShadow: {
         "custom-blue": "1px 2px 4px 0px rgba(0, 76, 230, 0.05)",
@@ -70,7 +92,6 @@ export default {
         'gradient-medium': 'gradient 6s linear infinite',
         'gradient-fast': 'gradient 4s linear infinite',
       },
-
     },
   },
   plugins: [require("tailwindcss-animate")],

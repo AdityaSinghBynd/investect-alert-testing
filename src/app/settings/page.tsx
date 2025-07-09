@@ -30,41 +30,41 @@ export default function SettingsPage() {
             <div className="w-full bg-[#FFFFFFCC] m-3 rounded-lg py-3 px-6 shadow-custom-blue-left">
                 <div className="max-w-8xl mx-auto w-full">
                     {/* Settings Header */}
-                    <h1 className="text-3xl font-medium text-[#001742] mb-3">Settings</h1>
+                    <h1 className="text-3xl font-medium text-text-primary mb-3">Settings</h1>
 
                     {/* User Information Section */}
                     <div className="space-y-4 mb-12 border-t-2 border-[#EAF0FC] pt-6">
                         <div className="flex justify-between items-center">
-                            <span className="text-[#4e5971] text-md">Name</span>
+                            <span className="text-text-secondary text-md">Name</span>
                             <Input
                                 id="name"
                                 type="text"
                                 value={userName}
                                 disabled
                                 // onChange={(e) => setName(e.target.value)}
-                                className="w-[260px] px-3 py-2.5 text-[16px] text-[#001742] border border-[#EAF0FC] rounded-sm focus:ring-1 focus:ring-[#004CE6] focus:border-[#004CE6] focus:outline-none placeholder:text-[#9babc7] shadow-none"
+                                className="w-[260px] px-3 py-2.5 text-[16px] text-text-primary border border-[#EAF0FC] rounded-sm focus:ring-1 focus:ring-[#004CE6] focus:border-[#004CE6] focus:outline-none placeholder:text-text-placeholder shadow-none"
                                 placeholder="Your name"
                             />
                         </div>
                         <div className="flex justify-between items-center">
-                            <span className="text-[#4e5971] text-md">Email</span>
+                            <span className="text-text-secondary text-md">Email</span>
                             <Input
                                 id="email"
                                 type="text"
                                 value={user?.email || ''}
                                 disabled
                                 placeholder="Your email"
-                                className="w-[260px] px-3 py-2.5 text-[16px] text-[#001742] border border-[#EAF0FC] rounded-sm focus:ring-1 focus:ring-[#004CE6] focus:border-[#004CE6] focus:outline-none placeholder:text-[#9babc7] shadow-none"
+                                className="w-[260px] px-3 py-2.5 text-[16px] text-text-primary border border-[#EAF0FC] rounded-sm focus:ring-1 focus:ring-[#004CE6] focus:border-[#004CE6] focus:outline-none placeholder:text-text-placeholder shadow-none"
                             />
                         </div>
                         <div className="flex justify-between items-center">
-                            <span className="text-[#4e5971] text-md">Organisation</span>
+                            <span className="text-text-secondary text-md">Organisation</span>
                             <Input
                                 id="organisation"
                                 type="text"
                                 value={userOrganisation}
                                 disabled
-                                className="w-[260px] px-3 py-2.5 text-[16px] text-[#001742] border border-[#EAF0FC] rounded-sm focus:ring-1 focus:ring-[#004CE6] focus:border-[#004CE6] focus:outline-none placeholder:text-[#9babc7] shadow-none"
+                                className="w-[260px] px-3 py-2.5 text-[16px] text-text-primary border border-[#EAF0FC] rounded-sm focus:ring-1 focus:ring-[#004CE6] focus:border-[#004CE6] focus:outline-none placeholder:text-text-placeholder shadow-none"
                                 placeholder="Your organisation name"
                             />
                         </div>
@@ -72,23 +72,23 @@ export default function SettingsPage() {
 
                     {/* System Section */}
                     <div className="mt-12 ">
-                        <h2 className="text-3xl font-medium text-[#001742] mb-3">System</h2>
+                        <h2 className="text-3xl font-medium text-text-primary mb-3">System</h2>
 
                         <div className="space-y-4  border-t-2 border-[#EAF0FC] pt-6">
                             <div className="flex justify-between items-center">
-                                <span className="text-[#4e5971] text-md">Support</span>
+                                <span className="text-text-secondary text-md">Support</span>
                                 <Button
                                     variant="ghost"
-                                    className="max-w-max flex items-center bg-[#f7f9fe] text-[#001742] rounded-md hover:bg-[#eaf0fc]"
+                                    className="max-w-max flex items-center bg-[#f7f9fe] text-text-primary rounded-md hover:bg-[#eaf0fc]"
                                     onClick={() => window.open('https://mail.google.com/mail/?view=cm&fs=1&to=support@bynd.ai&su=Need Contact Support', '_blank')}>
                                     Contact
                                 </Button>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="text-[#4e5971] text-md">You are signed in as <span className="text-[#004CE6]">"{userName || 'Your name'}"</span></span>
+                                <span className="text-text-secondary text-md">You are signed in as <span className="text-[#004CE6]">"{userName || 'Your name'}"</span></span>
                                 <Button
                                     variant="ghost"
-                                    className="max-w-max flex items-center bg-[#f7f9fe] text-[#001742] rounded-md hover:bg-[#eaf0fc]"
+                                    className="max-w-max flex items-center bg-[#f7f9fe] text-text-primary rounded-md hover:bg-[#eaf0fc]"
                                     onClick={handleSignOutClick}
                                 >
                                     Sign out

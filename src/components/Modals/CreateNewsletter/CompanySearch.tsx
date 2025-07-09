@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 // Images
 import { ArrowRight, X } from "lucide-react";
-import testlogoimage from '../../../../public/images/testlogoimage.png'
 // Components
 import { Company } from "./index";
 import { Input } from "@/components/ui/input";
@@ -86,14 +85,14 @@ export default function CompanySearch({
           type="text"
           placeholder="Search your companies"
           value={searchQuery}
-          className="w-full h-10 border-[#eaf0fc] focus:border-[#004CE6] focus:ring-1 focus:ring-[#004CE6] focus:outline-none placeholder:text-[#9babc7] shadow-none"
+          className="w-full h-10 border-[#eaf0fc] focus:border-[#004CE6] focus:ring-1 focus:ring-[#004CE6] focus:outline-none placeholder:text-text-placeholder shadow-none"
           onChange={(e) => handleSearch(e.target.value)}
           disabled={isLoading}
         />
         
         {/* Dropdown for search results */}
         {isDropdownOpen && filteredCompanies.length > 0 && (
-          <div className="absolute w-full mt-1 bg-white border border-[#eaf0fc] rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
+          <div className="absolute w-full mt-1 bg-layer-1 border border-[#eaf0fc] rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
             {filteredCompanies.map((company) => (
               <div
                 key={company.companyId}
@@ -101,7 +100,7 @@ export default function CompanySearch({
                 onClick={() => handleCompanySelect(company)}
               >
                 <Image
-                  src={company.logo || testlogoimage}
+                  src={company.logo || "/ByndLogoFavicon.svg"}
                   alt={company.name}
                   width={24}
                   height={24}
@@ -109,7 +108,7 @@ export default function CompanySearch({
                 />
                 <div>
                   <h3 className="font-medium text-sm">{company.name}</h3>
-                  <p className="text-xs text-[#9babc7]">{company.sector}</p>
+                  <p className="text-xs text-text-placeholder">{company.sector}</p>
                 </div>
               </div>
             ))}
@@ -117,16 +116,16 @@ export default function CompanySearch({
         )}
       </div>
 
-      <div className="flex-1 overflow-y-auto bg-[#fbfdff] rounded-lg p-3">
+      <div className="flex-1 overflow-y-auto bg-layer-2 rounded-lg p-3">
         {companies.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {companies.map((company) => (
               <div
                 key={company.companyId}
-                className="flex items-center justify-between rounded-lg border border-[#eaf0fc] bg-white px-3 py-2 max-w-max gap-2"
+                className="flex items-center justify-between rounded-lg border border-[#eaf0fc] bg-layer-1 px-3 py-2 max-w-max gap-2"
               >
                 <Image
-                  src={company.logo || testlogoimage}
+                  src={company.logo || "/ByndLogoFavicon.svg"}
                   alt={company.name}
                   width={20}
                   height={20}
@@ -137,7 +136,7 @@ export default function CompanySearch({
                 </div>
 
                 <X 
-                  className="h-4 w-4 text-[#4e5971] cursor-pointer" 
+                  className="h-4 w-4 text-text-secondary cursor-pointer" 
                   onClick={() => handleCompanyRemove(company.companyId)} 
                 />
               </div>
@@ -153,7 +152,7 @@ export default function CompanySearch({
               width={180}
               height={180}
             />
-            <p className="text-center text-[#9babc7] text-sm">
+            <p className="text-center text-text-placeholder text-sm">
               {isLoading ? "Loading companies..." : "Nothing added yet"}
             </p>
           </div>
@@ -162,7 +161,7 @@ export default function CompanySearch({
 
       {/* {companies.length > 0 && (
         <div className="p-3 flex flex-col gap-2">
-          <p className="text-sm text-[#001742] font-medium">We will track following sources</p>
+          <p className="text-sm text-text-primary font-medium">We will track following sources</p>
           <div className="flex flex-wrap gap-2">
             {AVAILABLE_SOURCES.map((source) => (
               <div
@@ -175,7 +174,7 @@ export default function CompanySearch({
                   onCheckedChange={() => handleSourceToggle(source.id)}
                   className="border-[#eaf0fc] shadow-none data-[state=checked]:bg-[#004CE6] data-[state=checked]:text-white"
                 />
-                <p className="text-sm font-normal text-[#001742]">
+                <p className="text-sm font-normal text-text-primary">
                   {source.label}
                 </p>
               </div>

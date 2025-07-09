@@ -117,8 +117,6 @@ export const useFetchReceivedAlertsByDate = (
   return useQuery<FetchReceivedAlertsResponse, Error>({
     queryKey: NEWSLETTER_QUERY_KEYS.receivedAlerts(payload),
     queryFn: async () => {
-      console.log("payload", payload)
-      console.log("running....")
       const response: AxiosResponse<FetchReceivedAlertsResponse> = await ApiService.apiCall(
         'POST',
         '/companySpecificAlerts/fetchDeliveryData',
@@ -127,8 +125,6 @@ export const useFetchReceivedAlertsByDate = (
         {},
         true
       );
-      console.log("response", response)
-      console.log("exited....")
       
       return response.data;
     },

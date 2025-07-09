@@ -3,12 +3,9 @@
 import { FormEvent, useState } from "react";
 import Image from "next/image";
 import PasswordProgress from "@/components/ui/PasswordProgress";
-import SuccessReset from "@/components/SuccessReset";
+import SuccessReset from "@/components/Auth/SuccessReset";
 import { useRouter } from "next/navigation";
-import successTickSVGIcon from "../../../../public/images/successTickSVGIcon.svg";
-import eyeImage from "../../../../public/images/openEyeSVGIcon.svg";
-import closedEyeImage from "../../../../public/images/closeEyeSVGIcon.svg";
-import crossImage from "../../../../public/images/errorCrossSVGIcon.svg";
+import { Eye, EyeOff, Check, X } from "lucide-react";
 import Head from "next/head";
 import { AxiosError } from "axios";
 import { BASE_URL } from "@/constant/constant";
@@ -128,14 +125,14 @@ export default function PasswordChange() {
       </Head>
       <div className="flex min-h-screen w-full">
 
-        <div className="w-full bg-[#FAFCFF] p-4 flex flex-col justify-start items-center min-h-screen gap-8">
+        <div className="w-full bg-layer-3 p-4 flex flex-col justify-start items-center min-h-screen gap-8">
           <Image src={ByndLogo} alt="ByndLogo" width={90} height={90} className="self-center" />
           {isSuccess ? (
             <SuccessReset />
           ) : (
-            <div className="max-w-[600px] w-full mx-auto flex flex-col gap-4 flex items-center justify-center bg-white rounded-lg p-5 shadow-custom-blue">
+            <div className="max-w-[600px] w-full mx-auto flex flex-col gap-4 flex items-center justify-center bg-layer-1 rounded-lg p-5 shadow-custom-blue">
               <div className="flex flex-col items-center justify-center gap-2">
-              <h1 className="text-[24px] font-normal text-[#001742]">
+              <h1 className="text-[24px] font-normal text-text-primary">
                 Reset Password
               </h1>
               <p className="text-base font-normal leading-6 text-[#344054]">
@@ -152,7 +149,7 @@ export default function PasswordChange() {
                     onChange={handleChange}
                     required
                     placeholder="New Password"
-                    className="w-full h-[54px] px-3.5 py-2.5 bg-white border-[1.5px] border-[#eaf0fc] rounded-md text-sm leading-6 text-[#101828] transition-all duration-200 placeholder:text-[#667085] focus:border-[#0047cb] focus:outline-none pr-11"
+                    className="w-full h-[54px] px-3.5 py-2.5 bg-layer-1 border-[1.5px] border-[#eaf0fc] rounded-md text-sm leading-6 text-[#101828] transition-all duration-200 placeholder:text-[#667085] focus:border-[#0047cb] focus:outline-none pr-11"
                     onFocus={() => setIsPasswordFocused(true)}
                   />
                   <button
@@ -160,12 +157,7 @@ export default function PasswordChange() {
                     onClick={() => togglePasswordVisibility("password")}
                     className="absolute right-3 top-1/2 -translate-y-1/2 bg-transparent border-none p-1 cursor-pointer flex items-center justify-center hover:opacity-80"
                   >
-                    <Image
-                      src={showPassword ? eyeImage : closedEyeImage}
-                      alt={showPassword ? "Hide Password" : "Show Password"}
-                      width={25}
-                      height={25}
-                    />
+                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
                 </div>
 
@@ -178,21 +170,14 @@ export default function PasswordChange() {
                     onChange={handleChange}
                     required
                     placeholder="Confirm Password"
-                    className="w-full h-[54px] px-3.5 py-2.5 bg-white border-[1.5px] border-[#eaf0fc] rounded-md text-sm leading-6 text-[#101828] transition-all duration-200 placeholder:text-[#667085] focus:border-[#0047cb] focus:outline-none pr-11"
+                    className="w-full h-[54px] px-3.5 py-2.5 bg-layer-1 border-[1.5px] border-[#eaf0fc] rounded-md text-sm leading-6 text-[#101828] transition-all duration-200 placeholder:text-[#667085] focus:border-[#0047cb] focus:outline-none pr-11"
                   />
                   <button
                     type="button"
                     onClick={() => togglePasswordVisibility("confirmPassword")}
                     className="absolute right-3 top-1/2 -translate-y-1/2 bg-transparent border-none p-1 cursor-pointer flex items-center justify-center hover:opacity-80"
                   >
-                    <Image
-                      src={showConfirmPassword ? eyeImage : closedEyeImage}
-                      alt={
-                        showConfirmPassword ? "Hide Password" : "Show Password"
-                      }
-                      width={25}
-                      height={25}
-                    />
+                    {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
                 </div>
 
@@ -216,33 +201,15 @@ export default function PasswordChange() {
                     <PasswordProgress strength={passwordStrength} />
                     <div className="space-y-2">
                       <p className="flex items-center gap-2">
-                        <Image
-                          src={passwordErrors.length ? successTickSVGIcon : crossImage}
-                          alt={passwordErrors.length ? "Tick" : "Cross"}
-                          className="w-6 h-6"
-                          width={25}
-                          height={25}
-                        />
+                        {passwordErrors.length ? <Check className="w-6 h-6" /> : <X className="w-6 h-6" />}
                         <span>8 Characters minimum</span>
                       </p>
                       <p className="flex items-center gap-2">
-                        <Image
-                          src={passwordErrors.number ? successTickSVGIcon : crossImage}
-                          alt={passwordErrors.number ? "Tick" : "Cross"}
-                          className="w-6 h-6"
-                          width={25}
-                          height={25}
-                        />
+                        {passwordErrors.number ? <Check className="w-6 h-6" /> : <X className="w-6 h-6" />}
                         <span>A number</span>
                       </p>
                       <p className="flex items-center gap-2">
-                        <Image
-                          src={passwordErrors.symbol ? successTickSVGIcon : crossImage}
-                          alt={passwordErrors.symbol ? "Tick" : "Cross"}
-                          className="w-6 h-6"
-                          width={25}
-                          height={25}
-                        />
+                        {passwordErrors.symbol ? <Check className="w-6 h-6" /> : <X className="w-6 h-6" />}
                         <span>A symbol</span>
                       </p>
                     </div>

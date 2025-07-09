@@ -9,7 +9,7 @@ import { useSession } from 'next-auth/react';
 import { useFetchReceivedAlertsByCompanyID } from '@/hooks/Newsletter/useNewsletter'
 import { FetchReceivedAlertsByCompanyIDPayload } from '@/hooks/Newsletter/newsletter.interface';
 // Components
-import CompanyNews from '@/components/NewsLetterComponents/Companies/CompanyNews';
+import CompanyNews from '@/components/TabContents/Companies/CompanyNews';
 import { Button } from '@/components/ui/button';
 import { ArrowLeftIcon } from 'lucide-react';
 
@@ -36,22 +36,33 @@ export default function CompanyPage() {
 
   return (
     <main className='flex bg-[#eaf0fc] min-h-screen w-full'>
-      <div className="w-full bg-[#FFFFFFCC] m-3 rounded-lg py-3 px-6 shadow-custom-blue-left">
+      <div className="w-full bg-[#FFFFFFCC] m-3 rounded-lg py-3 px-6 shadow-custom-blue-left h-[calc(100vh-24px)] flex flex-col">
 
         {/* Header */}
         <header className='flex items-center justify-start gap-2 w-full py-4'>
           <ArrowLeftIcon className="w-6 h-6 cursor-pointer" onClick={() => router.back()} />
-          <h1 className="flex items-center gap-2 text-xl font-medium text-[#001742]">
-            <Image src={receivedAlertsDataByCompanyID?.runs[0]?.companies[0]?.logo} alt="Company Logo" width={24} height={24} />
+          <h1 className="flex items-center gap-2 text-xl font-medium text-text-primary">
+            {receivedAlertsDataByCompanyID?.runs[0]?.companies[0]?.logo ? (
+              <Image 
+                src={receivedAlertsDataByCompanyID.runs[0].companies[0].logo} 
+                alt="Company Logo" 
+                width={24} 
+                height={24} 
+              />
+            ) : (
+              <div className="w-6 h-6 bg-gray-200 rounded-full" />
+            )}
             {receivedAlertsDataByCompanyID?.runs[0]?.companies[0]?.name}
-            </h1>
+          </h1>
         </header>
 
         {/* Main Content */}
-        <CompanyNews
-          data={receivedAlertsDataByCompanyID}
-          isLoading={receivedAlertsDataByCompanyIDLoading}
-        />
+        <div className="flex-1 overflow-y-auto scrollbar-hide">
+          <CompanyNews
+            data={receivedAlertsDataByCompanyID}
+            isLoading={receivedAlertsDataByCompanyIDLoading}
+          />
+        </div>
       </div>
     </main>
   )

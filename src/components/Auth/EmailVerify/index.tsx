@@ -28,11 +28,11 @@ export default function EmailVerify() {
         <link rel="icon" href="/images/ByndLogoFavicon.svg" />
       </Head>
 
-        <div className="w-full bg-[#FAFCFF] p-4 flex flex-col justify-start items-start min-h-screen gap-8">
+        <div className="w-full bg-layer-3 p-4 flex flex-col justify-start items-start min-h-screen gap-8">
         <Image src={ByndLogo} alt="ByndLogo" width={90} height={90} className="self-center" />
-          <div className="max-w-[600px] w-full mx-auto p-5 bg-white shadow-custom-blue rounded-lg">
+          <div className="max-w-[600px] w-full mx-auto p-5 bg-layer-1 shadow-custom-blue rounded-lg">
             <header className="flex flex-col gap-2 items-center justify-center text-center">
-              <h1 className="text-[24px] font-normal text-[#001742]">
+              <h1 className="text-[24px] font-normal text-text-primary">
                 Check your Email
               </h1>
               <div>

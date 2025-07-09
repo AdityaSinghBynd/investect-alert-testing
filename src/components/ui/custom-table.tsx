@@ -154,7 +154,7 @@ export default function HTMLToShadcnTable({
   if (!tableData) {
     return (
       <div className="w-full h-full max-w-[1200px] mx-auto flex flex-col gap-2 items-center">
-        <Table className="w-full h-full bg-white rounded border border-[#eaf0fc]">
+        <Table className="w-full h-full bg-layer-1 rounded border border-[#eaf0fc]">
           <TableHeader className="bg-gray-50 p-0">
             <TableRow className="border-b">
               {Array.from({ length: 4 }).map((_, i) => (
@@ -207,7 +207,7 @@ export default function HTMLToShadcnTable({
         rowSpan={cell.rowSpan}
         colSpan={cell.colSpan}
         className={`
-          ${isFirstColumn ? "sticky left-0 z-20 w-[200px] xl:w-[300px] font-medium !text-left break-words bg-white" : ""}
+          ${isFirstColumn ? "sticky left-0 z-20 w-[200px] xl:w-[300px] font-medium !text-left break-words bg-layer-1" : ""}
           ${cell.isHeader ? "sticky top-0 bg-[#F3F6FF] font-medium text-white p-[12px] z-30 min-w-[120px]" : "p-2 text-gray-600"}
           ${isFirstColumn && cell.isHeader ? "z-40 bg-[#F3F6FF]" : ""}
           ${!isFirstColumn ? "text-center" : "text-left"}
@@ -223,7 +223,7 @@ export default function HTMLToShadcnTable({
     <div className={`w-full ${className || ""}`}>
       <div className="w-full border !border-[#eaf0fc] rounded">
         <div className="w-full h-[500px] overflow-auto scrollbar-hide relative">
-          <Table className="w-full border-separate border-spacing-0 bg-white">
+          <Table className="w-full border-separate border-spacing-0 bg-layer-1">
             <TableHeader className="sticky top-0 z-30">
               {tableData.headers.map((row, rowIndex) => (
                 <TableRow

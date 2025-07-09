@@ -6,7 +6,7 @@ export function getFaviconUrl(url: string, size: number = 64): string {
     try {
       const parsedUrl = new URL(normalizedUrl);
       const domain = parsedUrl.hostname;
-      return `https://www.google.com/s2/favicons?domain=${domain}&sz=${size}`;
+      return `https://img.logo.dev/${domain}?token=pk_eMw84WGZTgWjQ_mTKSfirQ&size=${size}&format=png`;
     } catch (error) {
       console.error("Invalid URL:", url);
       return "";

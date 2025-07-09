@@ -31,7 +31,7 @@ export default function NewsletterSettings({
         <div className="space-y-2">
           <label
             htmlFor="name"
-            className="text-sm font-medium text-[#001742]"
+            className="text-sm font-medium text-text-primary"
           >
             Name
           </label>
@@ -40,20 +40,20 @@ export default function NewsletterSettings({
             value={settings.name}
             onChange={(e) => handleChange("name", e.target.value)}
             placeholder="IT & Telecom news"
-            className="shadow-none border-[#eaf0fc] text-[#001742] focus:ring-0 focus:border-[#004CE6] focus:outline-none placeholder:text-[#9babc7]"
+            className="shadow-none border-[#eaf0fc] text-text-primary focus:ring-0 focus:border-[#004CE6] focus:outline-none placeholder:text-text-placeholder"
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-[#001742]">
+          <label className="text-sm font-medium text-text-primary">
             Frequency
           </label>
           <Tabs defaultValue="daily" className="max-w-max">
             <TabsList className='p-1 bg-[#eaf0fc] rounded-md gap-2'>
-              <TabsTrigger value="daily" className='text-[#4e5971] text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Daily</TabsTrigger>
-              {/* <TabsTrigger value="bi-weekly" className='text-[#4e5971] text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Bi-weekly</TabsTrigger> */}
-              <TabsTrigger value="weekly" className='text-[#4e5971] text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Weekly</TabsTrigger>
-              <TabsTrigger value="monthly" className='text-[#4e5971] text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Monthly</TabsTrigger>
+              <TabsTrigger value="daily" className='text-text-secondary text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Daily</TabsTrigger>
+              {/* <TabsTrigger value="bi-weekly" className='text-text-secondary text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Bi-weekly</TabsTrigger> */}
+              <TabsTrigger value="weekly" className='text-text-secondary text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Weekly</TabsTrigger>
+              <TabsTrigger value="monthly" className='text-text-secondary text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Monthly</TabsTrigger>
             </TabsList>
           </Tabs>
         </div>
@@ -61,7 +61,7 @@ export default function NewsletterSettings({
         <div className="space-y-2 max-w-max">
           <label
             htmlFor="time"
-            className="text-sm font-medium text-[#001742]"
+            className="text-sm font-medium text-text-primary"
           >
             Time
           </label>
@@ -69,15 +69,15 @@ export default function NewsletterSettings({
             id="time"
             type="time"
             value={settings.time}
-            className="shadow-none border-[#eafofc] text-[#001742]"
+            className="shadow-none border-[#eafofc] text-text-primary"
             onChange={(e) => handleChange("time", e.target.value)}
           />
         </div>
       </div>
 
       <div className="flex justify-between items-center border-t border-[#eaf0fc] pt-2">
-        <Button variant="outline" className="text-[#001742] border-[#eaf0fc] shadow-none hover:bg-[#eaf0fc]" onClick={onBack}>
-          <ArrowLeft className="h-4 w-4 text-[#001742]" /> Back
+        <Button variant="outline" className="text-text-primary border-[#eaf0fc] shadow-none hover:bg-[#eaf0fc]" onClick={onBack}>
+          <ArrowLeft className="h-4 w-4 text-text-primary" /> Back
         </Button>
         <Button
           onClick={() => onSubmit(settings)}

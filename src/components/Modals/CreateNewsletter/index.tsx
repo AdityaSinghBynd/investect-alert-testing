@@ -108,12 +108,12 @@ export default function NewsletterModal({ isOpen, onClose }: NewsletterModalProp
       className="fixed inset-0 bg-[#0026731A]/30 backdrop-blur-sm z-50"
       onClick={onClose}>
       <div
-        className="fixed left-[50%] top-[40%] translate-x-[-50%] translate-y-[-50%] w-full h-full bg-white max-w-[650px] min-h-[400px] max-h-[400px] z-[70] rounded-lg shadow-custom-blue flex flex-col"
+        className="fixed left-[50%] top-[40%] translate-x-[-50%] translate-y-[-50%] w-full h-full bg-layer-1 max-w-[650px] min-h-[400px] max-h-[400px] z-[70] rounded-lg shadow-custom-blue flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <header className="flex items-center justify-between rounded-t-lg border-b border-[#eaf0fc] py-2 px-3">
           <h2 className="text-md font-medium">Create newsletter</h2>
-          <X className="h-5 w-5 cursor-pointer text-[#001742]" onClick={onClose} />
+          <X className="h-5 w-5 cursor-pointer text-text-primary" onClick={onClose} />
         </header>
 
         <main className="p-3 flex-1 overflow-hidden">

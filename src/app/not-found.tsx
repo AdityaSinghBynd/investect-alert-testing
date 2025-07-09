@@ -9,7 +9,7 @@ export default function NotFound() {
         <div className="min-h-screen flex flex-col items-center justify-center text-center p-6">
             <div className="flex items-center gap-2 mb-6">
                 <Image src={ByndLogo} alt="Bynd Logo" width={80} height={80} /> 
-                <span className="text-3xl text-[#4e5971] font-medium">Alerts</span>
+                <span className="text-3xl text-text-secondary font-medium">Alerts</span>
             </div>
             <div className="text-6xl font-bold text-gray-200 mb-4">404</div>
             <h1 className="text-3xl font-semibold mb-2">Page Not Found</h1>

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import successIcon from "../../../public/images/successTickSVGIcon.svg";
-import Image from "next/image";
+import { Check } from "lucide-react";
 import Link from "next/link";
 
 const Index = () => {
@@ -28,11 +27,7 @@ const Index = () => {
   return (
     <div className="items-start p-[100px]">
       <div className="flex items-center justify-center pb-3">
-        <Image
-          src={successIcon}
-          alt="successIcon"
-          className="h-[100px] w-[100px]"
-        />
+        <Check className="w-10 h-10 text-[#0047cb]" />
       </div>
 
       <h2 className="text-center text-4 text-[#101828] font-medium leading-6 mb-3">

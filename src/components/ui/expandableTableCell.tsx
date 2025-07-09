@@ -39,7 +39,7 @@ export const ExpandableCell = ({ children }: { children: React.ReactNode }) => {
       </PopoverTrigger>
       {isOverflowing && (
         <PopoverContent
-          className="w-[var(--radix-popover-trigger-width)] max-w-none rounded-md border border-[#eaf0fc] bg-white p-4 text-[#001742] shadow-custom-blue"
+          className="w-[var(--radix-popover-trigger-width)] max-w-none rounded-md border border-[#eaf0fc] bg-layer-1 p-4 text-text-primary shadow-custom-blue"
           side="top"
           align="center"
           alignOffset={0}

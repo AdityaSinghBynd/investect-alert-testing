@@ -2,10 +2,7 @@ import { FormEventHandler, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AUTH_URL } from "@/constant/constant";
-import successTickSVGIcon from "../../../../public/images/successTickSVGIcon.svg";
-import eyeImage from "../../../../public/images/openEyeSVGIcon.svg";
-import closedEyeImage from "../../../../public/images/closeEyeSVGIcon.svg";
-import crossImage from "../../../../public/images/errorCrossSVGIcon.svg";
+import { Eye, EyeOff, Check, X } from "lucide-react";
 import Head from "next/head";
 import PasswordProgress from "@/components/ui/PasswordProgress";
 import ByndLogo from "../../../../public/images/ByndLogo.svg";
@@ -140,7 +137,7 @@ export default function Register() {
         <link rel="icon" href="/images/ByndLogoFavicon.svg" />
       </Head>
 
-      <div className="w-full min-h-screen bg-[#FAFCFF] p-4 overflow-y-auto flex flex-col gap-8 scrollbar-thin scrollbar-thumb-[#cbd5e0] scrollbar-track-[#f7fafc]">
+      <div className="w-full min-h-screen bg-layer-3 p-4 overflow-y-auto flex flex-col gap-8 scrollbar-thin scrollbar-thumb-[#cbd5e0] scrollbar-track-[#f7fafc]">
         <Image
           src={ByndLogo}
           alt="Background"
@@ -149,12 +146,12 @@ export default function Register() {
           className="self-center"
         />
         <div className="flex flex-col max-w-[600px] w-full mx-auto">
-          <div className="bg-white shadow-custom-blue rounded-lg p-8">
+          <div className="bg-layer-1 shadow-custom-blue rounded-lg p-8">
             <header className="flex flex-col gap-2 items-center justify-center mb-8">
-              <h1 className="text-[30px] font-semibold leading-[38px] text-[#001742] tracking-wide m-0">
+              <h1 className="text-[30px] font-semibold leading-[38px] text-text-primary tracking-wide m-0">
                 Create account
               </h1>
-              <p className="text-base font-normal leading-6 text-[#001742] m-0">
+              <p className="text-base font-normal leading-6 text-text-primary m-0">
                 Already have an account?
                 <Link
                   href="/auth/login"
@@ -176,7 +173,7 @@ export default function Register() {
                     onChange={handleChange}
                     required
                     placeholder="First Name"
-                    className="w-full h-[54px] px-4 py-3 bg-white border border-[#eaf0fc] rounded-lg text-base leading-6 text-[#101828] transition-all duration-200 placeholder:text-[#667085] focus:border-[#0047cb] focus:ring-1 focus:ring-[#0047cb] focus:ring-opacity-100 focus:outline-none hover:border-[#0047cb]/50"
+                    className="w-full h-[54px] px-4 py-3 bg-layer-1 border border-[#eaf0fc] rounded-lg text-base leading-6 text-[#101828] transition-all duration-200 placeholder:text-[#667085] focus:border-[#0047cb] focus:ring-1 focus:ring-[#0047cb] focus:ring-opacity-100 focus:outline-none hover:border-[#0047cb]/50"
                   />
                 </div>
                 <div className="flex-1 relative">
@@ -188,7 +185,7 @@ export default function Register() {
                     onChange={handleChange}
                     required
                     placeholder="Last Name"
-                    className="w-full h-[54px] px-4 py-3 bg-white border border-[#eaf0fc] rounded-lg text-base leading-6 text-[#101828] transition-all duration-200 placeholder:text-[#667085] focus:border-[#0047cb] focus:ring-1 focus:ring-[#0047cb] focus:ring-opacity-100 focus:outline-none hover:border-[#0047cb]/50"
+                    className="w-full h-[54px] px-4 py-3 bg-layer-1 border border-[#eaf0fc] rounded-lg text-base leading-6 text-[#101828] transition-all duration-200 placeholder:text-[#667085] focus:border-[#0047cb] focus:ring-1 focus:ring-[#0047cb] focus:ring-opacity-100 focus:outline-none hover:border-[#0047cb]/50"
                   />
                 </div>
               </div>
@@ -202,7 +199,7 @@ export default function Register() {
                   onChange={handleChange}
                   required
                   placeholder="Email"
-                  className="w-full h-[54px] px-4 py-3 bg-white border border-[#eaf0fc] rounded-lg text-base leading-6 text-[#101828] transition-all duration-200 placeholder:text-[#667085] focus:border-[#0047cb] focus:ring-1 focus:ring-[#0047cb] focus:ring-opacity-100 focus:outline-none hover:border-[#0047cb]/50"
+                  className="w-full h-[54px] px-4 py-3 bg-layer-1 border border-[#eaf0fc] rounded-lg text-base leading-6 text-[#101828] transition-all duration-200 placeholder:text-[#667085] focus:border-[#0047cb] focus:ring-1 focus:ring-[#0047cb] focus:ring-opacity-100 focus:outline-none hover:border-[#0047cb]/50"
                 />
               </div>
 
@@ -215,7 +212,7 @@ export default function Register() {
                   onChange={handleChange}
                   required
                   placeholder="Password"
-                  className="w-full h-[54px] px-4 py-3 bg-white border border-[#eaf0fc] rounded-lg text-base leading-6 text-[#101828] transition-all duration-200 placeholder:text-[#667085] focus:border-[#0047cb] focus:ring-1 focus:ring-[#0047cb] focus:ring-opacity-100 focus:outline-none hover:border-[#0047cb]/50"
+                  className="w-full h-[54px] px-4 py-3 bg-layer-1 border border-[#eaf0fc] rounded-lg text-base leading-6 text-[#101828] transition-all duration-200 placeholder:text-[#667085] focus:border-[#0047cb] focus:ring-1 focus:ring-[#0047cb] focus:ring-opacity-100 focus:outline-none hover:border-[#0047cb]/50"
                   onFocus={() => {
                     setIsPasswordFocused(true);
                     setShowValidation(true);
@@ -227,12 +224,7 @@ export default function Register() {
                   className="absolute right-4 top-1/2 -translate-y-1/2 bg-transparent border-none p-1 cursor-pointer flex items-center justify-center hover:opacity-80 transition-opacity"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  <Image
-                    src={showPassword ? eyeImage : closedEyeImage}
-                    alt={showPassword ? "Hide password" : "Show password"}
-                    width={24}
-                    height={24}
-                  />
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
 
@@ -245,7 +237,7 @@ export default function Register() {
                   onChange={handleChange}
                   required
                   placeholder="Confirm Password"
-                  className="w-full h-[54px] px-4 py-3 bg-white border border-[#eaf0fc] rounded-lg text-base leading-6 text-[#101828] transition-all duration-200 placeholder:text-[#667085] focus:border-[#0047cb] focus:ring-1 focus:ring-[#0047cb] focus:ring-opacity-100 focus:outline-none hover:border-[#0047cb]/50"
+                  className="w-full h-[54px] px-4 py-3 bg-layer-1 border border-[#eaf0fc] rounded-lg text-base leading-6 text-[#101828] transition-all duration-200 placeholder:text-[#667085] focus:border-[#0047cb] focus:ring-1 focus:ring-[#0047cb] focus:ring-opacity-100 focus:outline-none hover:border-[#0047cb]/50"
                 />
                 <button
                   type="button"
@@ -253,12 +245,7 @@ export default function Register() {
                   className="absolute right-4 top-1/2 -translate-y-1/2 bg-transparent border-none p-1 cursor-pointer flex items-center justify-center hover:opacity-80 transition-opacity"
                   aria-label={showConfirmPassword ? "Hide password" : "Show password"}
                 >
-                  <Image
-                    src={showConfirmPassword ? eyeImage : closedEyeImage}
-                    alt={showConfirmPassword ? "Hide password" : "Show password"}
-                    width={24}
-                    height={24}
-                  />
+                  {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
 
@@ -272,36 +259,21 @@ export default function Register() {
           </div>
 
           {showValidation && (
-            <div className="mt-6 bg-white p-6 rounded-lg shadow-custom-blue">
+            <div className="mt-6 bg-layer-1 p-6 rounded-lg shadow-custom-blue">
               <div className="flex flex-col gap-3">
                 <p className="flex items-center gap-2 m-0">
-                  <Image
-                    src={passwordErrors.length ? successTickSVGIcon : crossImage}
-                    alt={passwordErrors.length ? "Valid" : "Invalid"}
-                    width={20}
-                    height={20}
-                  />
-                  <span className="text-sm text-[#4e5971]">
+                  {passwordErrors.length ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
+                  <span className="text-sm text-text-secondary">
                     8 characters minimum
                   </span>
                 </p>
                 <p className="flex items-center gap-2 m-0">
-                  <Image
-                    src={passwordErrors.number ? successTickSVGIcon : crossImage}
-                    alt={passwordErrors.number ? "Valid" : "Invalid"}
-                    width={20}
-                    height={20}
-                  />
-                  <span className="text-sm text-[#4e5971]">a number</span>
+                  {passwordErrors.number ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
+                  <span className="text-sm text-text-secondary">a number</span>
                 </p>
                 <p className="flex items-center gap-2 m-0">
-                  <Image
-                    src={passwordErrors.symbol ? successTickSVGIcon : crossImage}
-                    alt={passwordErrors.symbol ? "Valid" : "Invalid"}
-                    width={20}
-                    height={20}
-                  />
-                  <span className="text-sm text-[#4e5971]">a symbol</span>
+                  {passwordErrors.symbol ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
+                  <span className="text-sm text-text-secondary">a symbol</span>
                 </p>
               </div>
               <div className="mt-4">
@@ -311,16 +283,11 @@ export default function Register() {
           )}
 
           {showPasswordMatch && (
-            <div className="mt-4 bg-white p-6 rounded-lg shadow-custom-blue">
+            <div className="mt-4 bg-layer-1 p-6 rounded-lg shadow-custom-blue">
               <div className="flex flex-col gap-1">
                 <p className="flex items-center gap-2 m-0">
-                  <Image
-                    src={passwordsMatch ? successTickSVGIcon : crossImage}
-                    alt={passwordsMatch ? "Valid" : "Invalid"}
-                    width={20}
-                    height={20}
-                  />
-                  <span className="text-sm text-[#4e5971]">
+                  {passwordsMatch ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
+                  <span className="text-sm text-text-secondary">
                     {passwordsMatch ? "Passwords match" : "Passwords do not match"}
                   </span>
                 </p>

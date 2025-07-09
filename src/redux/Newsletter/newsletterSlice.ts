@@ -1,8 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface NewsletterState {
+    newsletterList: any;
+    activeNewsletter: any;
+    newsletterData: any;
+    newsletterHistoryData: any;
+    newsletterHistoryDat: boolean;
+    selectedTimestamp: string | null;
+}
+
+const initialState: NewsletterState = {
     newsletterList: null,
     activeNewsletter: null,
+    newsletterData: null,
+    newsletterHistoryData: null,
+    newsletterHistoryDat: true,
+    selectedTimestamp: null,
 }
 
 const newsletterSlice = createSlice({
@@ -14,9 +27,25 @@ const newsletterSlice = createSlice({
         },
         setActiveNewsletter: (state, action) => {
             state.activeNewsletter = action.payload;
+        },
+        setNewsletterData: (state, action) => {
+            state.newsletterData = action.payload;
+        },
+        setNewsletterHistoryData: (state, action) => {
+            state.newsletterHistoryData = action.payload;
+        },
+        setSelectedTimestamp: (state, action) => {
+            state.selectedTimestamp = action.payload;
         }
     }
 })
 
-export const { setNewsletterList, setActiveNewsletter } = newsletterSlice.actions;
+export const {
+    setNewsletterList,
+    setActiveNewsletter,
+    setNewsletterData,
+    setNewsletterHistoryData,
+    setSelectedTimestamp
+} = newsletterSlice.actions;
+
 export default newsletterSlice.reducer;

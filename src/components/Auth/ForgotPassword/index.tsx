@@ -77,9 +77,9 @@ export default function ForgotPassword() {
         <link rel="icon" href="/images/ByndLogoFavicon.svg" />
       </Head>
 
-        <div className="w-full bg-[#FAFCFF] p-4 flex flex-col justify-start items-start min-h-screen gap-8 overflow-y-auto scrollbar-thin scrollbar-thumb-[#cbd5e0] scrollbar-track-[#f7fafc]">
+        <div className="w-full bg-layer-3 p-4 flex flex-col justify-start items-start min-h-screen gap-8 overflow-y-auto scrollbar-thin scrollbar-thumb-[#cbd5e0] scrollbar-track-[#f7fafc]">
         <Image src={ByndLogo} alt="Background" width={90} height={90} className="self-center" />
-          <div className="mx-auto max-w-[600px] w-full p-5 bg-white shadow-custom-blue rounded-lg">
+          <div className="mx-auto max-w-[600px] w-full p-5 bg-layer-1 shadow-custom-blue rounded-lg">
             {isSuccess ? (
               <EmailVerify />
             ) : (
@@ -106,7 +106,7 @@ export default function ForgotPassword() {
                       placeholder="Email"
                       autoComplete="email"
                       disabled={isLoading}
-                      className="w-full h-[54px] px-[14px] py-[10px] bg-white border border-[#e4e7ec] rounded text-base leading-6 text-[#101828] transition-all duration-200 ease-in-out placeholder-[#667085] focus:border-[#0047cb] focus:ring-1 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full h-[54px] px-[14px] py-[10px] bg-layer-1 border border-[#e4e7ec] rounded text-base leading-6 text-[#101828] transition-all duration-200 ease-in-out placeholder-[#667085] focus:border-[#0047cb] focus:ring-1 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                   </div>
 
@@ -123,7 +123,7 @@ export default function ForgotPassword() {
                       type="button"
                       onClick={handleBackToLogin}
                       disabled={isLoading}
-                      className="h-[54px] w-full bg-white text-[#344054] border border-[#e4e7ec] rounded-lg font-medium text-base cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#f9fafb] hover:border-[#d0d5dd] active:translate-y-[1px] disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="h-[54px] w-full bg-layer-1 text-[#344054] border border-[#e4e7ec] rounded-lg font-medium text-base cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#f9fafb] hover:border-[#d0d5dd] active:translate-y-[1px] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Back to Login
                     </button>
@@ -132,10 +132,10 @@ export default function ForgotPassword() {
                   {error && (
                     <div className="flex items-start gap-3 p-4 bg-[#fff1f1] border border-[#fecdcd] rounded-lg">
                       <div className="flex-shrink-0 mt-0.5">
-                        <X className="h-5 w-5 text-[#d92d20]" />
+                        <X className="h-5 w-5 text-text-error" />
                       </div>
                       <div className="flex-1">
-                        <p className="text-[#d92d20] font-medium text-sm m-0 mb-1">
+                        <p className="text-text-error font-medium text-sm m-0 mb-1">
                           Error
                         </p>
                         <p className="text-[#667085] text-sm leading-5 m-0">

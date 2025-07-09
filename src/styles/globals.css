@@ -28,6 +28,19 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    
+    /* Custom Colors */
+    --Layer01: #ffffff;
+    --Layer02: #FBFDFF;
+    --Layer03: #FAFCFF;
+    --TextPrimary: #001742;
+    --TextSecondary: #4e5971;
+    --TextPlaceholder: #9babc7;
+    --TextError: #d92d20;
+    --ButtonPrimary: #004CE6;
+    --BorderSubtle01: 1px solid #eaf0fc;
+    --BorderSubtle02: 2px dashed #DEE6F5;
+    --BorderTransparent: 1px solid transparent;
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -82,3 +95,4 @@ body,
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
 }
+
