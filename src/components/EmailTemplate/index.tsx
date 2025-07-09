@@ -10,14 +10,14 @@ import CompanyBanner from '../../../public/images/investecBanner.png'
 // Components
 import SendEmailModal from '@/components/Modals/EmailSend'
 // Redux
+import { RootState } from '@/redux/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNewsletterContent } from '@/redux/App/AppSlice'
 import { setSelectedTimestamp } from '@/redux/Newsletter/newsletterSlice'
 // Utils
 import { getFaviconUrl, getCleanDomainName } from '@/utils/getFaviconUtils'
 // Types
-import { AlertRun, CompanyWithNews, NewsItem } from '@/hooks/Newsletter/newsletter.interface'
-import { RootState } from '@/redux/store'
+import { CompanyWithNews, NewsItem } from '@/hooks/Newsletter/newsletter.interface'
 
 const AlertArea = () => {
     const router = useRouter()
@@ -76,7 +76,7 @@ const AlertArea = () => {
                         }}
                     />
                 )}
-                <span className="text-xs font-medium text-gray-700">{name}</span>
+                <span className="text-xs font-medium text-text-primary">{name}</span>
             </Link>
         )
     }
@@ -90,7 +90,7 @@ const AlertArea = () => {
             <ul className="space-y-1 mb-6">
                 {newsItem.keyPoints.map((point, pointIndex) => (
                     <li key={pointIndex} className="flex items-start gap-2 leading-6">
-                        <div className="w-1.5 h-1.5 bg-gray-600 rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="w-1.5 h-1.5 bg-[#edf1f3] rounded-full mt-2 flex-shrink-0"></div>
                         <span className="text-sm text-text-secondary leading-relaxed">{point}</span>
                     </li>
                 ))}
@@ -111,7 +111,7 @@ const AlertArea = () => {
         return (
             <div key={company.id} className="mb-12">
                 <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-green-800 mb-2">
+                    <h2 className="text-2xl font-bold text-[#328589] mb-2">
                         {company.name}
                     </h2>
                 </div>
@@ -172,6 +172,8 @@ const AlertArea = () => {
                 <SendEmailModal
                     isOpen={isEmailModalOpen}
                     onClose={handleCloseEmailModal}
+                    companiesWithNews={companiesWithNews}
+                    date={selectedRun.date}
                 />
             )}
         </div>

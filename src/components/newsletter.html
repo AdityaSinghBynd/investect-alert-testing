@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investec Daily Newsletter</title>
+    <style type="text/css">
+        /* Structural responsiveness only - fonts remain consistent */
+        @media screen and (max-width: 768px) {
+            .newsletter-container {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .content-wrapper {
+                padding: 0 15px !important;
+            }
+
+            .headlines-section {
+                padding: 12px 15px 16px 15px !important;
+            }
+
+            .news-section {
+                padding: 15px !important;
+            }
+
+            .contacts-grid {
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+            }
+
+            .banner-img {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .key-points {
+                padding-left: 16px !important;
+            }
+
+            .content-wrapper {
+                padding: 0 10px !important;
+            }
+
+            .headlines-section {
+                padding: 10px 12px 14px 12px !important;
+            }
+
+            .news-section {
+                padding: 12px !important;
+            }
+
+            .footer-section {
+                padding: 12px !important;
+            }
+        }
+
+        /* Prevent any automatic font scaling */
+        * {
+            -webkit-text-size-adjust: 100% !important;
+            -ms-text-size-adjust: 100% !important;
+            text-size-adjust: 100% !important;
+        }
+    </style>
+</head>
+
+<body style="font-family: Arial, sans-serif; background-color: #ffffff; margin: 0; padding: 0; box-sizing: border-box;">
+    <div class="newsletter-container" style="max-width: 900px; margin: 0 auto; background-color: #ffffff;">
+        <!-- Banner Section -->
+        <div class="banner-section" style="text-align: center; padding: 20px 0 40px 0; background-color: #ffffff;">
+            <img src="/images/investecBanner.png" alt="Investec Bank plc (UK)" class="banner-img"
+                style="max-width: 100%; height: auto; display: block; margin: 0 auto;" width="1080" height="197">
+        </div>
+
+        <div class="content-wrapper" style="max-width: 880px; margin: 0 auto; padding: 0 20px;">
+            <!-- Date Section -->
+            <div style="border-top: 1.5pt solid #328589; padding: 12px 0 8px 12px; margin-bottom: 8px;">
+                <div style="font-size: 8pt; color: #7f7f7f; text-align: left;">{{dateString}}</div>
+            </div>
+
+            <!-- Headlines Section -->
+            <div class="headlines-section"
+                style="background-color: #fbfbfb; border-bottom: 1.5pt solid #d9d9d9; padding: 12px 20px 16px 20px; margin-bottom: 16px !important;">
+                <div style="font-size: 8pt; margin-bottom: 8px;">
+                    <span style="color: #328589; font-weight: bold;">Good morning,</span>
+                </div>
+                <div style="font-size: 8pt;">
+                    {{#each companies}}
+                    {{#each news}}
+                    <div style="margin-bottom: 8px;">
+                        <span
+                            style="color: #000000; font-weight: bold; text-decoration: none; display: inline; line-height: 0.5 !important;">{{title}}</span>
+                        {{#if sources.length}}
+                        <span style="color: #7f7f7f; font-size: 7pt; display: inline; margin-left: 6px;">
+                            {{#each sources}}
+                            <a href="{{url}}" style="color: #7f7f7f; text-decoration: underline;">{{name}}</a>{{#unless
+                            @last}} | {{/unless}}
+                            {{/each}}
+                        </span>
+                        {{/if}}
+                    </div>
+                    {{/each}}
+                    {{/each}}
+                </div>
+            </div>
+
+            <!-- News Section -->
+            <div class="news-section" style="background-color: #edf1f3; padding: 20px; margin: 0;">
+                <div style="font-size: 8pt; color: #328589; font-weight: bold; margin-bottom: 16px; text-align: left;">
+                    News Snippets</div>
+
+                {{#each companies}}
+                {{#if news.length}}
+                <div style="margin-bottom: 24px;">
+                    <div
+                        style="font-size: 8pt; color: #328589; font-weight: bold; margin-bottom: 12px; line-height: normal !important; text-align: left;">
+                        {{name}}:</div>
+
+                    {{#each news}}
+                    <div style="margin-bottom: 12px; line-height: normal !important;  text-align: left;">
+                        <div style="margin-bottom: 6px;">
+                            <span
+                                style="font-size: 8pt; color: #000000; font-weight: bold; line-height: 1.2 !important; display: inline;">{{title}}</span>
+                            {{#if sources.length}}
+                            <span style="font-size: 7pt; color: #7f7f7f; display: inline; margin-left: 6px;">
+                                {{#each sources}}
+                                <a href="{{url}}"
+                                    style="color: #7f7f7f; text-decoration: underline;">{{name}}</a>{{#unless @last}} |
+                                {{/unless}}
+                                {{/each}}
+                            </span>
+                            {{/if}}
+                        </div>
+                        <ul style="list-style: disc !important; padding-left: 10px !important; margin: 0 !important;"
+                            class="key-points">
+                            {{#each keyPoints}}
+                            <li
+                                style="font-size: 8pt !important; color: #000000 !important; margin-bottom: 1px !important; line-height: 1.2 !important;">
+                                {{this}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    {{/each}}
+                </div>
+                {{/if}}
+                {{/each}}
+            </div>
+
+            <!-- Research Section -->
+            <div style="padding: 16px 20px; border-top: 1.5pt solid #d9d9d9;">
+                <div style="font-size: 8pt; color: #328589; font-weight: bold; margin-bottom: 4px;">Investec Research
+                </div>
+                <div
+                    style="font-size: 8pt; color: #404040; font-weight: bold; font-style: italic; margin-bottom: 16px;">
+                    Access to our recent reports</div>
+            </div>
+
+            <!-- Footer Section -->
+            <!-- <div class="footer-section" style="border-top: 1.5pt solid #808080; padding: 16px 20px; margin-top: 20px;">
+                <div style="font-size: 9pt; color: #7f7f7f; font-weight: bold; margin-bottom: 8px;">Have a great day!</div>
+                <div style="font-size: 8pt; color: #328589; font-weight: bold; margin-bottom: 12px;">Investec India</div>
+                
+                <div class="contacts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 16px;">
+                    <div style="font-size: 8pt;">
+                        <div style="font-weight: bold; color: #000000; margin-bottom: 2px;">Nitin Padmanabhan</div>
+                        <div style="color: #000000; margin-bottom: 2px;">Tel: +91 (0) 22 6136 7427</div>
+                        <div style="font-size: 7pt;">
+                            <a href="mailto:Nitin.Padmanabhan@investec.co.in" style="color: #467882; text-decoration: underline;">Nitin.Padmanabhan@investec.co.in</a>
+                        </div>
+                    </div>
+                    <div style="font-size: 8pt;">
+                        <div style="font-weight: bold; color: #000000; margin-bottom: 2px;">Nayan Thakker</div>
+                        <div style="color: #000000; margin-bottom: 2px;">Tel: +91 (0) 22 6849 7527</div>
+                        <div style="font-size: 7pt;">
+                            <a href="mailto:Nayan.thakker@investec.com" style="color: #467882; text-decoration: underline;">Nayan.thakker@investec.com</a>
+                        </div>
+                    </div>
+                    <div style="font-size: 8pt;">
+                        <div style="font-weight: bold; color: #000000; margin-bottom: 2px;">Vivek Desai</div>
+                        <div style="color: #000000; margin-bottom: 2px;">Tel: +91 (0) 22 6849 7526</div>
+                        <div style="font-size: 7pt;">
+                            <a href="mailto:Vivek.desai@investec.com" style="color: #467882; text-decoration: underline;">Vivek.desai@investec.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- Investec Information Section -->
+            <!-- <div style="padding: 16px 20px; border-top: 1.5pt solid #d9d9d9; background-color: #ffffff;">
+                <div style="max-width: 100%;">
+                    <p style="font-size: 8pt; color: #000000; line-height: 1.3; margin-bottom: 12px;">
+                        Please visit <a href="http://www.investec.co.uk" style="color: #328589; text-decoration: underline;">www.investec.co.uk</a> to learn more about our Investment banking and securities business.
+                    </p>
+                    
+                    <p style="font-size: 8pt; color: #000000; font-weight: normal; line-height: 1.3; margin-bottom: 8px;">IMPORTANT NOTICE:</p>
+                    
+                    <p style="font-size: 8pt; color: #000000; line-height: 1.3; margin-bottom: 8px;">
+                        This communication forms part of an electronic communication sent to the intended recipient (or such person's authorised representative) for their sole use and is subject to important legal and regulatory restrictions, qualifications and disclaimers that may be accessed and read in the attached research publication. If you cannot access the disclaimer, please obtain a copy thereof from us by sending an e-mail to in the case of SA <a href="mailto:securities@investec.co.za" style="color: #328589; text-decoration: underline;">securities@investec.co.za</a> or in the case of the UK or Australia: <a href="mailto:securities@investec.co.uk" style="color: #328589; text-decoration: underline;">securities@investec.co.uk</a>
+                    </p>
+                    
+                    <p style="font-size: 8pt; color: #000000; line-height: 1.3; margin-bottom: 8px;">
+                        The disclaimer is deemed to form part of this communication. In the event of a conflict between the disclaimer and this notice, the disclaimer shall take precedence. This communication is confidential for the information of the addressee only (and may not be reproduced in whole or in part, copies circulated, or disclosed to another party, unless permitted pursuant to and in accordance with the disclaimer.
+                    </p>
+                    
+                    <p style="font-size: 8pt; color: #000000; line-height: 1.3; margin-bottom: 8px;">
+                        If you are not the intended recipient of this e-mail, then:<br>
+                        (a) please notify the sender of this e-mail immediately by return e-mail, facsimile or telephone and delete this message from your system;<br>
+                        (b) you may not print, store, forward or copy this message or any part thereof or disclose or cause information in this message to be disclosed to any other person.
+                    </p>
+                    
+                    <p style="font-size: 8pt; color: #000000; line-height: 1.3; margin-bottom: 8px;">
+                        Nothing in this message constitutes an offer, warranty or representation from us. None of our employees or representatives are permitted to send unsolicited messages ("spam") and our company cannot be held liable therefore. If you regard this message as spam, please inform us immediately by sending an e-mail to in the case of SA <a href="mailto:securities@investec.co.za" style="color: #328589; text-decoration: underline;">securities@investec.co.za</a> or in the case of the UK or Australia: <a href="mailto:securities@investec.co.uk" style="color: #328589; text-decoration: underline;">securities@investec.co.uk</a>
+                    </p>
+                    
+                    <p style="font-size: 8pt; color: #000000; line-height: 1.3; margin-bottom: 8px;">
+                        Unless otherwise agreed:<br>
+                        (a) We are only deemed to have received an e-mail once we have confirmed receipt thereof to you;<br>
+                        (b) We are deemed to have sent an e-mail once reflected as "sent" on our e-mail server.
+                    </p>
+                    
+                    <p style="font-size: 8pt; color: #000000; line-height: 1.3; margin-bottom: 8px;">
+                        If this message contains offensive, derogatory or defamatory statements or materials, it means the message has been sent outside the sender's scope of employment with us and only the sender can be held liable in his/her personal capacity. Our corporate information and names of our office bearers can be accessed by sending an e-mail to in the case of SA <a href="mailto:securities@investec.co.za" style="color: #328589; text-decoration: underline;">securities@investec.co.za</a> or in the case of the UK or Australia: <a href="mailto:securities@investec.co.uk" style="color: #328589; text-decoration: underline;">securities@investec.co.uk</a>
+                    </p>
+                    
+                    <p style="font-size: 8pt; color: #000000; line-height: 1.3; margin-bottom: 8px;">
+                        The disclaimer applies to our original message, any attachments and all subsequent messages or attachments we may send.
+                    </p>
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+</body>
+
+</html>
