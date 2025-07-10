@@ -30,20 +30,20 @@ export const useCreateNewsletter = (
         {},
         true
       );
-      
+
       return response.data;
     },
     onSuccess: (data, variables) => {
       // Invalidate newsletters list for the user
-      queryClient.invalidateQueries({ 
-        queryKey: NEWSLETTER_QUERY_KEYS.list(variables.user_id) 
+      queryClient.invalidateQueries({
+        queryKey: NEWSLETTER_QUERY_KEYS.list(variables.user_id)
       });
-      
+
       // Invalidate all newsletters lists
-      queryClient.invalidateQueries({ 
-        queryKey: NEWSLETTER_QUERY_KEYS.lists() 
+      queryClient.invalidateQueries({
+        queryKey: NEWSLETTER_QUERY_KEYS.lists()
       });
-      
+
       // Call custom onSuccess if provided
       options?.onSuccess?.(data, variables, undefined);
     },
@@ -71,25 +71,25 @@ export const useDeleteNewsletter = (
         {},
         true
       );
-      
+
       return response.data || { success: true, message: 'Newsletter deleted successfully' };
     },
     onSuccess: (data, variables) => {
       // Invalidate newsletters list for the user
-      queryClient.invalidateQueries({ 
-        queryKey: NEWSLETTER_QUERY_KEYS.list(variables.userID) 
+      queryClient.invalidateQueries({
+        queryKey: NEWSLETTER_QUERY_KEYS.list(variables.userID)
       });
-      
+
       // Invalidate specific newsletter details
-      queryClient.invalidateQueries({ 
-        queryKey: NEWSLETTER_QUERY_KEYS.detail(variables.newsletterID) 
+      queryClient.invalidateQueries({
+        queryKey: NEWSLETTER_QUERY_KEYS.detail(variables.newsletterID)
       });
-      
+
       // Remove the specific newsletter from cache
-      queryClient.removeQueries({ 
-        queryKey: NEWSLETTER_QUERY_KEYS.detail(variables.newsletterID) 
+      queryClient.removeQueries({
+        queryKey: NEWSLETTER_QUERY_KEYS.detail(variables.newsletterID)
       });
-      
+
       // Call custom onSuccess if provided
       options?.onSuccess?.(data, variables, undefined);
     },
@@ -117,25 +117,25 @@ export const useDeleteCompany = (
         {},
         true
       );
-      
+
       return response.data || { success: true, message: 'Company deleted successfully' };
     },
     onSuccess: (data, variables) => {
       // Invalidate newsletters list for the user
-      queryClient.invalidateQueries({ 
-        queryKey: NEWSLETTER_QUERY_KEYS.list(variables.userID) 
+      queryClient.invalidateQueries({
+        queryKey: NEWSLETTER_QUERY_KEYS.list(variables.userID)
       });
-      
+
       // Invalidate companies list
-      queryClient.invalidateQueries({ 
-        queryKey: NEWSLETTER_QUERY_KEYS.companies() 
+      queryClient.invalidateQueries({
+        queryKey: NEWSLETTER_QUERY_KEYS.companies()
       });
-      
+
       // Invalidate all newsletter details (since company was removed)
-      queryClient.invalidateQueries({ 
-        queryKey: NEWSLETTER_QUERY_KEYS.details() 
+      queryClient.invalidateQueries({
+        queryKey: NEWSLETTER_QUERY_KEYS.details()
       });
-      
+
       // Call custom onSuccess if provided
       options?.onSuccess?.(data, variables, undefined);
     },
@@ -161,11 +161,10 @@ export const useEmailSend = (
         {},
         true
       );
-      
+
       return response.data || { success: true, message: 'Emails sent successfully' };
     },
     onSuccess: (data, variables) => {
-      console.log(`Bulk email sent to ${variables.emails.length} recipients`);
       options?.onSuccess?.(data, variables, undefined);
     },
     onError: (error, variables, context) => {
@@ -192,25 +191,25 @@ export const useSubmitUpdatedDataInNewsletterTemplate = (
         {},
         true
       );
-      
+
       return response.data || { success: true, message: 'Data submitted successfully' };
     },
     onSuccess: (data, variables) => {
       // Invalidate newsletter details for the specific alert
-      queryClient.invalidateQueries({ 
-        queryKey: NEWSLETTER_QUERY_KEYS.detail(variables.alert_id) 
+      queryClient.invalidateQueries({
+        queryKey: NEWSLETTER_QUERY_KEYS.detail(variables.alert_id)
       });
-      
+
       // Invalidate received alerts that might be affected
-      queryClient.invalidateQueries({ 
-        queryKey: ['receivedAlerts'] 
+      queryClient.invalidateQueries({
+        queryKey: ['receivedAlerts']
       });
-      
+
       // Invalidate received alerts by company
-      queryClient.invalidateQueries({ 
-        queryKey: ['receivedAlertsByCompany'] 
+      queryClient.invalidateQueries({
+        queryKey: ['receivedAlertsByCompany']
       });
-      
+
       // Call custom onSuccess if provided
       options?.onSuccess?.(data, variables, undefined);
     },
@@ -237,19 +236,19 @@ export const useNewsletterOperations = () => {
     deleteCompany,
     emailSend,
     submitUpdatedData,
-    
+
     // Helper functions
     isCreating: createNewsletter.isPending,
     isDeleting: deleteNewsletter.isPending || deleteCompany.isPending,
     isSendingEmail: emailSend.isPending,
     isSubmittingData: submitUpdatedData.isPending,
-    
+
     // Combined loading state
-    isLoading: createNewsletter.isPending || 
-               deleteNewsletter.isPending || 
-               deleteCompany.isPending || 
-               emailSend.isPending || 
-               submitUpdatedData.isPending,
+    isLoading: createNewsletter.isPending ||
+      deleteNewsletter.isPending ||
+      deleteCompany.isPending ||
+      emailSend.isPending ||
+      submitUpdatedData.isPending,
   };
 };
 

@@ -8,19 +8,20 @@ import { useParams } from 'next/navigation'
 import DeleteCompanyModal from '@/components/Modals/Actions/Delete'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 // Redux
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/store';
+import { setNewsletterData } from '@/redux/Newsletter/newsletterSlice';
 // Types
 import { CompanyWithAlertData } from '@/hooks/Newsletter/newsletter.interface';
-import { MoreVertical, Trash, Trash2 } from 'lucide-react'
+import { MoreVertical, Trash } from 'lucide-react'
 
-const CompanyCard: React.FC<CompanyWithAlertData & { alertId: string, setIsDeleteModalOpen: (isOpen: boolean) => void }> = ({ logo, name, sector, company_id, alertId, setIsDeleteModalOpen }) => {
+const CompanyCard: React.FC<CompanyWithAlertData & { alertId: string, setIsDeleteModalOpen: (isOpen: boolean) => void, company_id: string }> = ({ logo, name, sector, company_id, alertId, setIsDeleteModalOpen }) => {
     const [open, setOpen] = useState(false);
 
     return (
         <Link
             href={`/newsletter/${alertId}/${company_id}`}
-            className="group p-3 bg-layer-1 rounded-lg border border-[#eaf0fc] hover:bg-[#f7f9fe] transition-all cursor-pointer min-h-[160px] flex flex-col items-start justify-between gap-2"
+            className={`group p-3 bg-layer-1 rounded-lg border border-primary hover:border-secondary hover:bg-layer-3 transition-all cursor-pointer min-h-[160px] flex flex-col items-start justify-between gap-2 ${open ? 'bg-layer-3 border-secondary' : 'bg-layer-1 border-primary'}`}
         >
             <div className="w-12 h-12 relative rounded-full ">
                 {logo ? (
@@ -46,13 +47,13 @@ const CompanyCard: React.FC<CompanyWithAlertData & { alertId: string, setIsDelet
 
                 <DropdownMenu open={open} onOpenChange={setOpen}>
                     <DropdownMenuTrigger asChild>
-                        <button className="mb-1 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button className={`mb-1 flex items-center justify-center ${open ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} transition-opacity`}>
                             <MoreVertical className="h-4 w-4" />
                         </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                         align="end"
-                        className="rounded border border-[#EAF0FC] bg-layer-1 shadow-custom-blue"
+                        className="rounded border border-primary bg-layer-1 shadow-custom-blue"
                     >
                         <DropdownMenuItem
                             onClick={(e) => {
@@ -61,7 +62,7 @@ const CompanyCard: React.FC<CompanyWithAlertData & { alertId: string, setIsDelet
                                 setIsDeleteModalOpen(true);
                                 setOpen(false);
                             }}
-                            className="flex items-center py-2 justify-start gap-2 text-[14px] text-text-primary rounded cursor-pointer"
+                            className="flex items-center py-2 justify-start gap-2 text-[14px] text-text-primary rounded-sm cursor-pointer duration-0 data-[highlighted]:bg-red-500 data-[highlighted]:text-white"
                         >
                             <Trash className="h-6 w-6" />
                             Delete company
@@ -76,10 +77,32 @@ const CompanyCard: React.FC<CompanyWithAlertData & { alertId: string, setIsDelet
 
 // Main Component
 const Companies = () => {
+    const dispatch = useDispatch();
     const slug = useParams();
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [selectedCompanyId, setSelectedCompanyId] = useState<string>('');
     const activeNewsletterData = useSelector((state: RootState) => state.newsletter.newsletterData);
     const activeNewsletterCompanyData = activeNewsletterData?.find((newsletter) => newsletter?.alert?.alert_id === slug.slug);
+
+    const handleCompanyDelete = () => {
+        if (!selectedCompanyId || !activeNewsletterData) return;
+
+        // Create updated newsletter data with the company removed
+        const updatedNewsletterData = activeNewsletterData.map(newsletter => {
+            if (newsletter?.alert?.alert_id === slug.slug) {
+                return {
+                    ...newsletter,
+                    companies: newsletter.companies.filter(
+                        (company: any) => company.company_id !== selectedCompanyId
+                    )
+                };
+            }
+            return newsletter;
+        });
+
+        // Update Redux state
+        dispatch(setNewsletterData(updatedNewsletterData));
+    };
 
     return (
         <>
@@ -89,16 +112,29 @@ const Companies = () => {
                         key={company.company_id}
                         {...company}
                         alertId={slug.slug as string}
-                        setIsDeleteModalOpen={setIsDeleteModalOpen}
+                        setIsDeleteModalOpen={(isOpen) => {
+                            setSelectedCompanyId(company.company_id);
+                            setIsDeleteModalOpen(isOpen);
+                        }}
+                        company_id={company.company_id}
                     />
                 ))}
+                {activeNewsletterCompanyData?.companies.length === 0 && (
+                    <div className="col-span-full text-left mt-4 text-text-secondary">
+                        There are no companies in the newsletter
+                    </div>
+                )}
             </div>
 
             {isDeleteModalOpen && (
                 <DeleteCompanyModal
                     type="company"
-                    id={activeNewsletterCompanyData?.company_id}
-                    onClose={() => setIsDeleteModalOpen(false)}
+                    id={selectedCompanyId}
+                    onClose={() => {
+                        setIsDeleteModalOpen(false);
+                        setSelectedCompanyId('');
+                    }}
+                    onDelete={handleCompanyDelete}
                 />
             )}
         </>

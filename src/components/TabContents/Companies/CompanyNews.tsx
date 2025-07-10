@@ -46,13 +46,13 @@ export default function CompanyNews({ data, isLoading }: CompanyNewsProps) {
 
   if (sortedDates.length === 0) {
     return (
-      <div className="w-full h-full max-w-[1200px] mx-auto flex flex-col gap-2">
-        <Table className="w-full h-full bg-layer-1 rounded border border-[#eaf0fc]">
+      <div className="w-full h-full mx-auto flex flex-col gap-2">
+        <Table className="w-full h-full bg-layer-1 !rounded border border-primary">
           <TableHeader>
-            <TableRow className="bg-[#f7f9fe] hover:bg-[#f7f9fe] border-b border-[#eaf0fc]">
-              <TableHead className="text-text-primary font-medium border-r border-[#eaf0fc]">News</TableHead>
-              <TableHead className="text-text-primary font-medium border-r border-[#eaf0fc]">Description</TableHead>
-              <TableHead className="text-text-primary font-medium border-r border-[#eaf0fc]">Sources</TableHead>
+            <TableRow className="bg-layer-3 hover:bg-layer-3 border-b border-primary">
+              <TableHead className="text-text-primary font-medium border-r border-primary">News</TableHead>
+              <TableHead className="text-text-primary font-medium border-r border-primary">Description</TableHead>
+              <TableHead className="text-text-primary font-medium border-r border-primary">Sources</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -68,7 +68,7 @@ export default function CompanyNews({ data, isLoading }: CompanyNewsProps) {
   }
 
   return (
-    <div className="w-full h-full max-w-[1200px] mx-auto flex flex-col gap-4 mt-4">
+    <div className="w-full h-full mx-auto flex flex-col gap-4 mt-4">
       {sortedDates.map(([date, runData]) => (
         <div key={date} className="flex flex-col gap-2">
           <h2 className="text-xl font-medium text-text-primary mb-2">{date}</h2>
@@ -88,11 +88,11 @@ export default function CompanyNews({ data, isLoading }: CompanyNewsProps) {
               {runData.news.map((news: any, index: number) => (
                 <TableRow key={index} className="hover:bg-[#f7f9fe] border-b border-[#eaf0fc]">
 
-                  <TableCell className="text-text-primary border-r border-[#eaf0fc] min-w-[250px] max-w-[250px]">
+                  <TableCell className="text-text-primary border-r border-[#eaf0fc] min-w-[250px] max-w-[250px] align-top">
                     {news.title}
                   </TableCell>
 
-                  <TableCell className="text-text-secondary border-r border-[#eaf0fc]">
+                  <TableCell className="text-text-secondary border-r border-[#eaf0fc] align-top">
                     <ul className="list-disc pl-4 space-y-2">
                       {news.keyPoints.map((point: string, idx: number) => (
                         <li key={idx}>{point}</li>
@@ -100,7 +100,7 @@ export default function CompanyNews({ data, isLoading }: CompanyNewsProps) {
                     </ul>
                   </TableCell>
 
-                  <TableCell>
+                  <TableCell className="align-top">
                     <div className="flex items-center gap-2 min-w-[250px] max-w-[250px] flex-wrap">
                       {news?.sources?.map((sourceUrl: string, sourceIndex: number) => {
                         return (
@@ -109,7 +109,7 @@ export default function CompanyNews({ data, isLoading }: CompanyNewsProps) {
                             href={sourceUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-text-primary border border-[#eaf0fc] hover:bg-[#ffffff] rounded-md px-2 py-1"
+                            className="flex items-center gap-2 text-text-primary border border-[#eaf0fc] hover:bg-white hover:border-secondary rounded-md px-2 py-1"
                           >
                             <Image src={getFaviconUrl(sourceUrl)} alt="Favicon" width={16} height={16} />
                             {getCleanDomainName(sourceUrl)}

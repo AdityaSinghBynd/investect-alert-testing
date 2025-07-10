@@ -7,7 +7,10 @@ export interface CreateNewsletterPayload {
   title: string;
   cron_spec: string;
   user_id: string;
-  company_ids: string[];
+  companies: Array<{
+    company_id: string;
+    context?: string;
+  }>;
   email: string;
   alert_id?: string;
 }
@@ -17,7 +20,10 @@ export interface CreateNewsletterResponse {
   user_id: string;
   cron_spec: string;
   email: string;
-  company_ids: string[];
+  companies: Array<{
+    company_id: string;
+    context?: string;
+  }>;
 }
 
 // Delete Newsletter interfaces

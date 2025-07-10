@@ -30,24 +30,28 @@ const History = () => {
 
   // This child component is used to render the first 3 companies in the table and the remaining count
   const renderCompanies = (companies: CompanyWithNews[]) => {
-    const visibleCompanies = companies.slice(0, 3);
-    const remainingCount = companies.length - 3;
+    const visibleCompanies = companies.slice(0, 4);
+    const remainingCount = companies.length - 4;
 
     return (
-      <div className="flex flex-wrap gap-2 overflow-y-auto scrollbar-hide flex items-center justify-center">
+      <div className="flex flex-wrap gap-2 overflow-y-auto scrollbar-hide flex items-start justify-start">
         {visibleCompanies.map((company) => (
-          <span
+          <div
             key={company.id}
-            className="p-1 border border-[#eaf0fc] rounded-md flex items-center gap-2"
+            className="p-2 min-h-[30px] max-h-[30px] border border-primary rounded-md flex items-center gap-2 overflow-hidden"
           >
-            <Image src={company.logo} alt={company.name} width={20} height={20}/>
-            {truncateText(company.name, 7)}
-          </span>
+            {company.logo ? (
+              <Image src={company.logo} alt={company.name} width={20} height={20} />
+            ) : (
+              <div className="w-5 h-5 bg-gray-200 rounded-sm" />
+            )}
+            {truncateText(company.name, 10)}
+          </div>
         ))}
         {remainingCount > 0 && (
-          <span className="p-1 border border-[#eaf0fc] rounded-md bg-[#f7f9fe]">
+          <div className="p-1.5 min-h-[30px] max-h-[30px] border border-primary rounded-md bg-layer-3 flex items-center justify-center">
             + {remainingCount}
-          </span>
+          </div>
         )}
       </div>
     );
@@ -74,68 +78,65 @@ const History = () => {
     router.push(`/newsletter/${slug}`);
   }
 
-  // If there is no data, show the no data component
-  if (!receivedAlertsDataByDate || receivedAlertsDataByDate.runs?.length === 0) {
-    return (
-      <div className="w-full p-4 text-center flex flex-col items-center justify-center gap-4">
-        <Image src={noData} alt="No Data" width={200} height={200} />
-        <div className="w-full text-center text-md text-text-secondary font-medium">No Alert has been received yet</div>
-      </div>
-    )
-  }
-
   return (
     <div className="w-full h-[calc(100vh-150px)] flex flex-col">
       <div className="flex-1 overflow-auto scrollbar-hide">
         <Table>
           {/* Table Header */}
-          <TableHeader className="sticky top-0 z-10 border border-[#eaf0fc]">
-            <TableRow className='bg-[#f7f9fe] hover:bg-[#f7f9fe] border-y border-[#eaf0fc]'>
-              <TableHead className='text-[16px] text-text-primary border-r border-[#eaf0fc]'>Date</TableHead>
-              <TableHead className='text-[16px] text-text-primary border-r border-[#eaf0fc]'>Companies</TableHead>
-              <TableHead className='text-[16px] text-text-primary border-r border-[#eaf0fc]'>News</TableHead>
-              <TableHead className='text-[16px] text-text-primary border-r border-[#eaf0fc]'>Actions</TableHead>
+          <TableHeader className="sticky top-0 z-10 border border-primary">
+            <TableRow className='bg-layer-3 hover:bg-layer-3 border-y border-primary'>
+              <TableHead className='text-[16px] text-text-primary border-r border-primary'>Date</TableHead>
+              <TableHead className='text-[16px] text-text-primary border-r border-primary'>Companies</TableHead>
+              <TableHead className='text-[16px] text-text-primary border-r border-primary'>News</TableHead>
+              <TableHead className='text-[16px] text-text-primary border-r border-primary'>Actions</TableHead>
             </TableRow>
           </TableHeader>
 
           {/* Table Body */}
-          <TableBody className='border border-[#eaf0fc]'>
+          <TableBody className='border border-primary'>
             {activeNewsletterDataByDate?.runs
               ?.filter((run: AlertRun) => {
                 // Check if any company in this run has news
                 return run.companies.some(company => company.news && company.news.length > 0);
               })
               .map((run: AlertRun) => (
-              <TableRow
-                key={run.run_id}
-                className='min-h-[130px] max-h-[130px] bg-layer-1 hover:bg-layer-2 border-b border-[#eaf0fc] text-md text-text-primary text-center'
-              >
-                <TableCell className="font-medium border-r border-[#eaf0fc] min-w-[140px] max-w-[140px]">
-                  {format(new Date(run.timestamp), 'dd MMM')}
-                </TableCell>
+                <TableRow
+                  key={run.run_id}
+                  className='min-h-[130px] max-h-[130px] bg-layer-1 hover:bg-layer-2 border border-primary text-md text-text-primary text-center'
+                >
+                  <TableCell className="font-medium border-r border-primary min-w-[140px] max-w-[140px] align-center">
+                    {format(new Date(run.timestamp), 'dd MMM')}
+                  </TableCell>
 
-                <TableCell className='border-r border-[#eaf0fc] min-w-[200px] max-w-[200px]'>
-                  {renderCompanies(run.companies)}
-                </TableCell>
+                  <TableCell className='border-r border-primary min-w-[200px] max-w-[200px] align-top'>
+                    {renderCompanies(run.companies.filter(company => company.news && company.news.length > 0))}
+                  </TableCell>
 
-                <TableCell className='border-r border-[#eaf0fc]'>
-                  <div className="whitespace-pre-line text-left text-sm text-text-secondary">
-                    {formatNewsPoints(run.companies)}
-                  </div>
-                </TableCell>
+                  <TableCell className='border-r border-primary align-top'>
+                    <div className="whitespace-pre-line text-left text-sm text-text-secondary">
+                      {formatNewsPoints(run.companies)}
+                    </div>
+                  </TableCell>
 
-                <TableCell className="text-center min-w-[140px] max-w-[140px]">
-                  <Button
-                    variant="outline"
-                    className='border-[#eaf0fc] text-text-primary shadow-none px-3 py-1 hover:bg-layer-1'
-                    onClick={() => handleViewNewsletter(slug as string, run.timestamp)}
-                  >
-                    <Eye className="h-5 w-5" />
-                    <span className='text-md font-medium'>View</span>
-                  </Button>
+                  <TableCell className="text-center min-w-[140px] max-w-[140px] align-center">
+                    <Button
+                      variant="outline"
+                      className='border-primary text-text-primary shadow-none px-4 py-2 hover:bg-layer-1 hover:border-secondary'
+                      onClick={() => handleViewNewsletter(slug as string, run.timestamp)}
+                    >
+                      <Eye className="h-5 w-5" />
+                      <span className='text-md font-medium'>View</span>
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            {(!activeNewsletterDataByDate?.runs || activeNewsletterDataByDate.runs.length === 0) && (
+              <TableRow className='h-[200px] bg-layer-1 hover:bg-layer-2 border border-primary text-md text-text-primary text-center'>
+                <TableCell colSpan={4} className="text-center">
+                  <div className="text-text-secondary">No Alert has been received yet</div>
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </div>

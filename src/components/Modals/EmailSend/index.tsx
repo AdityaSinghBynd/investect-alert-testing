@@ -232,14 +232,14 @@ const SendEmailModal: React.FC<SendEmailModalProps> = ({
                 value={emailInput}
                 onChange={(e) => setEmailInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="h-10 border-[#eaf0fc] shadow-none focus:border-[#004CE6] focus:ring-[#004CE6]"
+                className="h-10 border-primary font-normal shadow-none focus:border-[#004CE6] focus:ring-[#004CE6] placeholder:text-text-placeholder"
               />
             </div>
             <Button
               onClick={addRecipient}
               disabled={!emailInput.trim() || !emailInput.includes('@')}
               variant="ghost"
-              className="h-10 text-button-primary border border-[#eaf0fc] hover:bg-[#004CE6] hover:text-white shadow-none"
+              className="h-10 text-button-primary border border-primary hover:bg-[#004CE6] hover:text-white shadow-none"
             >
               <Plus className="w-5 h-5" />
               Add
@@ -289,7 +289,6 @@ const SendEmailModal: React.FC<SendEmailModalProps> = ({
             <div className="text-center py-8 text-gray-500">
               <User className="w-12 h-12 mx-auto mb-3 text-gray-300" />
               <p className="text-sm">No recipients added yet</p>
-              <p className="text-xs text-gray-400">Add email addresses above</p>
             </div>
           )}
         </main>

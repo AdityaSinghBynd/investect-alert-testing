@@ -1,12 +1,16 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { NewsletterConfig } from "./index";
+// Components
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+// Images
 import { ArrowLeft, ArrowRight } from "lucide-react";
-
+// Hooks
+import { useNewsletterOperations } from "@/hooks/NewsletterOperations/useNewsletterOperations";
+// Interfaces
 interface NewsletterSettingsProps {
   initialValues: Pick<NewsletterConfig, "name" | "frequency" | "time">;
   onBack: () => void;
@@ -19,6 +23,7 @@ export default function NewsletterSettings({
   onSubmit
 }: NewsletterSettingsProps) {
   const [settings, setSettings] = useState(initialValues);
+  const { createNewsletter } = useNewsletterOperations();
 
   const handleChange = (field: keyof typeof settings, value: string) => {
     setSettings(prev => ({ ...prev, [field]: value }));
@@ -84,7 +89,7 @@ export default function NewsletterSettings({
           disabled={!settings.name || !settings.frequency || !settings.time}
           className="bg-[#004CE6] text-white border-none hover:bg-[#004CE6]/90 rounded-md"
         >
-          Finish <ArrowRight className="h-4 w-4" />
+          {createNewsletter.isPending ? "Creating..." : "Finish"} <ArrowRight className="h-4 w-4" />
         </Button>
       </div>
 

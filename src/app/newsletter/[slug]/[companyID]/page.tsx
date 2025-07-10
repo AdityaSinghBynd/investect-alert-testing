@@ -36,21 +36,21 @@ export default function CompanyPage() {
 
   return (
     <main className='flex bg-[#eaf0fc] min-h-screen w-full'>
-      <div className="w-full bg-[#FFFFFFCC] m-3 rounded-lg py-3 px-6 shadow-custom-blue-left h-[calc(100vh-24px)] flex flex-col">
+      <div className="w-full bg-[#FFFFFFCC] m-3 ml-0 rounded-lg py-7 px-10 shadow-custom-blue-left h-[calc(100vh-24px)] flex flex-col">
 
         {/* Header */}
-        <header className='flex items-center justify-start gap-2 w-full py-4'>
+        <header className='flex items-center justify-start gap-3 w-full py-4'>
           <ArrowLeftIcon className="w-6 h-6 cursor-pointer" onClick={() => router.back()} />
-          <h1 className="flex items-center gap-2 text-xl font-medium text-text-primary">
+          <h1 className="flex items-center gap-3 text-[20px] font-medium text-text-primary">
             {receivedAlertsDataByCompanyID?.runs[0]?.companies[0]?.logo ? (
               <Image 
                 src={receivedAlertsDataByCompanyID.runs[0].companies[0].logo} 
                 alt="Company Logo" 
-                width={24} 
-                height={24} 
+                width={28} 
+                height={28} 
               />
             ) : (
-              <div className="w-6 h-6 bg-gray-200 rounded-full" />
+              <div className="w-8 h-8 bg-gray-200 rounded-full" />
             )}
             {receivedAlertsDataByCompanyID?.runs[0]?.companies[0]?.name}
           </h1>

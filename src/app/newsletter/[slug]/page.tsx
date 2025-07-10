@@ -22,28 +22,28 @@ export default function NewsletterPage() {
     const { newsletterContent } = useSelector((state: RootState) => state.app);
     const { newsletterData } = useSelector((state: RootState) => state.newsletter);
     const activeNewsletter = newsletterData?.find((newsletter) => newsletter.alert?.alert_id === slug.slug);
-    console.log("activeNewsletter", activeNewsletter)
+
     return (
         <main className='flex bg-[#eaf0fc] min-h-screen w-full overflow-hidden'>
-            <div className="w-full bg-[#FFFFFFCC] m-3 rounded-lg py-3 px-6 shadow-custom-blue-left">
+            <div className="w-full bg-[#FFFFFFCC] m-3 ml-0 rounded-lg py-7 px-10 shadow-custom-blue-left">
 
                 {/* Title and Tabs of the newsletter */}
 
                 {newsletterContent === "newsletter-tabContent" ? (
                     <>
-                        <h1 className="text-3xl font-medium text-text-primary mb-5">{activeNewsletter?.alert?.title}</h1>
+                        <h1 className="text-[28px] font-medium text-text-primary mb-4">{activeNewsletter?.alert?.title}</h1>
                         <Tabs defaultValue="history" className="w-full">
 
-                            <TabsList className='p-0 mb-2 bg-transparent border-b border-[#EAF0FC] rounded-none items-end'>
-                                <TabsTrigger value="history" className="flex items-center text-md rounded-none gap-2 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-[#004CE6] hover:text-text-primary">
+                            <TabsList className='p-0 mb-2 bg-transparent border-b border-primary rounded-none items-end'>
+                                <TabsTrigger value="history" className="flex items-center py-2 text-md text-text-secondary rounded-none gap-2 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-button-primary hover:text-text-primary">
                                     <History className="w-5 h-5" />
                                     History
                                 </TabsTrigger>
-                                <TabsTrigger value="companies" className="flex items-center text-md rounded-none gap-2 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-[#004CE6] hover:text-text-primary">
+                                <TabsTrigger value="companies" className="flex items-center py-2 text-md text-text-secondary rounded-none gap-2 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-button-primary hover:text-text-primary">
                                     <Building2Icon className="w-5 h-5" />
                                     Your companies
                                 </TabsTrigger>
-                                <TabsTrigger value="settings" className="flex items-center text-md rounded-none gap-2 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-[#004CE6] hover:text-text-primary">
+                                <TabsTrigger value="settings" className="flex items-center py-2 text-md text-text-secondary rounded-none gap-2 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-button-primary hover:text-text-primary">
                                     <Settings className="w-5 h-5" />
                                     Settings
                                 </TabsTrigger>

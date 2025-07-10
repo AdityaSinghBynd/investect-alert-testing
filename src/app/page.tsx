@@ -1,24 +1,28 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { SessionUser } from '@/types/sessionUser';
 // Images 
 import NoDeliveriesImage from '../../public/images/noPreviewSVG.svg';
 // Redux
-import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNewsletterContent } from '@/redux/App/AppSlice';
+import { setActiveNewsletter } from '@/redux/Newsletter/newsletterSlice';
 // Utils
 import { truncateText } from '@/utils';
 
 export default function Home() {
+  const dispatch = useDispatch();
   const { data: session } = useSession();
   const user = session?.user as SessionUser;
-
+  const router = useRouter();
   const { newsletterData, newsletterHistoryData } = useSelector((state: RootState) => state.newsletter);
-
+  const newslettersList = useSelector((state: RootState) => state.newsletter.newsletterList);
+  
   // Getting the user name from the email
   const userName = useMemo(() =>
     user?.email?.split('@')[0].split('.').map(word =>
@@ -62,17 +66,23 @@ export default function Home() {
 
   }, [newsletterData, newsletterHistoryData]);
 
+  const handleNewsletterClick = (newsletterId: string) => {
+    dispatch(setNewsletterContent("newsletter-tabContent"))
+    dispatch(setActiveNewsletter(newslettersList.find((newsletter) => newsletter.alert?.alert_id === newsletterId)))
+    router.push(`/newsletter/${newsletterId}`);
+  }
+
   return (
     <main className='flex bg-[#eaf0fc] min-h-screen w-full'>
-      <div className="w-full h-screen bg-[#FFFFFFCC] m-3 rounded-lg pt-3 pb-[100px] px-6 shadow-custom-blue-left overflow-y-auto scrollbar-hide">
-        <header className='mb-6'>
-          <h1 className="text-3xl font-medium text-text-primary">Morning {userName ? userName : 'Person'}! Here are your recent deliveries</h1>
+      <div className="w-full bg-[#FFFFFFCC] m-3 ml-0 rounded-lg pt-7 pb-[100px] px-10 overflow-y-auto scrollbar-hide">
+        <header className='mb-4'>
+          <h1 className="text-[28px] font-medium text-text-primary">Hello {userName ? userName : 'Person'}!!</h1>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {processedNewsletterData.length > 0 ? (
             processedNewsletterData.map((newsletter, index) => (
-              <Link href={`/newsletter/${newsletter.id}`} key={index} className='flex flex-col gap-2 border border-[#EAF0FC] rounded-xl p-3 w-full min-h-[250px] max-h-[300px] bg-layer-1 hover:shadow-custom-blue transition-shadow duration-200'>
+              <div onClick={() => handleNewsletterClick(newsletter.id)} key={index} className='flex flex-col gap-2.5 border border-primary rounded-xl p-3 w-full min-h-[250px] max-h-[300px] bg-layer-1 hover:bg-layer-2 hover:border-secondary hover:shadow-custom-blue transition-shadow duration-200 cursor-pointer'>
                 {/* Newsletter Title */}
                 <h2 className='text-xl font-medium text-text-primary'>{newsletter.title}</h2>
 
@@ -81,7 +91,7 @@ export default function Home() {
                   {newsletter.companies.map((company) => (
                     <div
                       key={company.id}
-                      className="flex items-center gap-2 px-2 py-1 rounded-lg border border-[#EAF0FC] bg-layer-1 hover:bg-[#f8fafd] transition-colors duration-200 max-w-max"
+                      className="flex items-center justify-center gap-2 px-2 py-1 rounded-md border border-primary bg-layer-1 hover:border-secondary transition-colors duration-200 max-w-max"
                     >
                       {company.logo ? (
                         <Image
@@ -102,7 +112,7 @@ export default function Home() {
                 </div>
 
                 {/* Top Headlines */}
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1">
                   <h3 className="text-md font-medium text-text-primary">Top headlines</h3>
                   <div className="flex flex-col gap-1">
                     {newsletter.companies.map(company =>
@@ -114,7 +124,7 @@ export default function Home() {
                     )}
                   </div>
                 </div>
-              </Link>
+              </div>
             ))
           ) : (
             <div className='flex flex-col items-center justify-center w-full col-span-2 gap-6'>

@@ -17,7 +17,6 @@ import { setActiveNewsletter } from '@/redux/Newsletter/newsletterSlice';
 import { getCronFrequency, generateCronExpression, FrequencyType } from '@/utils/cronUtils';
 // Hooks
 import { useNewsletterOperations } from '@/hooks/NewsletterOperations/useNewsletterOperations';
-import { useFetchSingleNewsletterData } from '@/hooks/Newsletter/useNewsletter';
 
 interface NewsletterChanges {
     frequency: FrequencyType;
@@ -36,7 +35,7 @@ const Settings = () => {
     const activeNewsletterData = newsletterData?.find((newsletter) => newsletter.alert?.alert_id === slug.slug);
     const { createNewsletter } = useNewsletterOperations();
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    console.log("activeNewsletterData", activeNewsletterData)
+
     // Get initial frequency from cron expression
     const initialFrequency = getCronFrequency(activeNewsletterData?.cron_spec || '');
 
@@ -95,7 +94,10 @@ const Settings = () => {
             const payload = {
                 cron_spec: newCronSpec,
                 user_id: user?.id,
-                company_ids: activeNewsletterData.companies.map(company => company.company_id),
+                companies: activeNewsletterData.companies.map(company => ({
+                    company_id: company.company_id,
+                    context: ""
+                })),
                 email: changes.email || user?.email,
                 alert_id: activeNewsletterData.alert?.alert_id,
                 title: changes.title || activeNewsletterData?.alert?.title
@@ -118,68 +120,84 @@ const Settings = () => {
 
     return (
         <>
-            <main className='flex flex-col gap-4 mt-6'>
-                {/* Newsletter name */}
-                <div className='flex flex-col gap-2'>
-                    <label htmlFor="name" className='text-text-secondary text-sm font-medium'>Newsletter name</label>
-                    <Input
-                        id="name"
-                        type="text"
-                        value={changes.title || activeNewsletterData?.alert?.title}
-                        onChange={(e) => handleInputChange('title', e.target.value)}
-                        className="w-[300px] px-3 py-2.5 text-[16px] text-text-primary border border-[#EAF0FC] rounded-sm focus:ring-1 focus:ring-[#004CE6] focus:border-[#004CE6] focus:outline-none placeholder:text-text-placeholder shadow-none"
-                        placeholder="Your newsletter name"
-                    />
-                </div>
+            <main className='flex flex-col gap-4 max-w-2xl mr-auto'>
 
-                {/* Delivery frequency */}
-                <div className='flex flex-col gap-2'>
-                    <label htmlFor="name" className='text-text-secondary text-sm font-medium'>Delivery frequency</label>
-                    <Tabs value={changes.frequency} onValueChange={handleFrequencyChange} className="max-w-max flex flex-col gap-1">
-                        <TabsList className='p-1 bg-[#eaf0fc] rounded-md gap-2'>
-                            <TabsTrigger value="daily" className='text-text-secondary text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Daily</TabsTrigger>
-                            {/* <TabsTrigger value="bi-weekly" className='text-text-secondary text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Bi-weekly</TabsTrigger> */}
-                            <TabsTrigger value="weekly" className='text-text-secondary text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Weekly</TabsTrigger>
-                            <TabsTrigger value="monthly" className='text-text-secondary text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Monthly</TabsTrigger>
-                        </TabsList>
+                <div className='flex flex-col gap-2 w-full space-y-3'>
 
-                        <span className='text-text-placeholder text-xs font-normal'>
+                    <div className='flex items-end justify-between gap-2 border-b border-[#EAF0FC] pb-3 h-[40px]'>
+                        <h2 className='text-lg font-medium text-text-primary'>Newsletter settings</h2>
+
+                        {changes.hasChanges && (
+                            <Button
+                                variant='default'
+                                onClick={handleUpdateNewsletter}
+                                className='w-max bg-button-primary font-semibold text-sm text-white border-none hover:bg-[#004CE6]/90 rounded-md px-3 py-1 shadow-none'
+                            >
+                                {createNewsletter.status === 'pending' ? 'Updating...' : 'Update'}
+                            </Button>
+                        )}
+                    </div>
+
+                    {/* Newsletter name */}
+                    <div className='flex items-center justify-between gap-2'>
+                        <label htmlFor="name" className='text-text-primary text-sm font-medium'>Newsletter name</label>
+                        <Input
+                            id="name"
+                            type="text"
+                            value={changes.title || activeNewsletterData?.alert?.title}
+                            onChange={(e) => handleInputChange('title', e.target.value)}
+                            className="w-[300px] px-3 py-2.5 text-[16px] text-text-primary border border-[#EAF0FC] rounded-sm focus:ring-1 focus:ring-[#004CE6] focus:border-[#004CE6] focus:outline-none placeholder:text-text-placeholder shadow-none"
+                            placeholder="Your newsletter name"
+                        />
+                    </div>
+
+                    {/* Delivery frequency */}
+                    <div className='flex items-center justify-between gap-2'>
+                        <label htmlFor="name" className='text-text-primary text-sm font-medium'>Delivery frequency</label>
+                        <Tabs value={changes.frequency} onValueChange={handleFrequencyChange} className="max-w-max flex flex-col gap-1">
+                            <TabsList className='p-1 bg-[#eaf0fc] rounded-md gap-2'>
+                                <TabsTrigger value="daily" className='text-text-placeholder text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Daily</TabsTrigger>
+                                {/* <TabsTrigger value="bi-weekly" className='text-text-placeholder text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Bi-weekly</TabsTrigger> */}
+                                <TabsTrigger value="weekly" className='text-text-placeholder text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Weekly</TabsTrigger>
+                                <TabsTrigger value="monthly" className='text-text-placeholder text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Monthly</TabsTrigger>
+                            </TabsList>
+
+                            {/* <span className='text-text-placeholder text-xs font-normal'>
                             Daily delivery at {activeNewsletterData?.cron_spec ? `${activeNewsletterData.cron_spec.split(' ')[1]}:${activeNewsletterData.cron_spec.split(' ')[0]}` : '3:00pm'}
-                        </span>
-                    </Tabs>
-                </div>
+                        </span> */}
+                        </Tabs>
+                    </div>
 
-                {/* Delivery email */}
-                <div className='flex flex-col gap-2'>
-                    <label htmlFor="email" className='text-text-secondary text-sm font-medium'>Delivery email</label>
-                    <Input
-                        id="email"
-                        type="email"
-                        value={changes.email || user?.email}
-                        onChange={(e) => handleInputChange('email', e.target.value)}
-                        className="w-[300px] px-3 py-2.5 text-[16px] text-text-primary border border-[#EAF0FC] rounded-sm focus:ring-1 focus:ring-[#004CE6] focus:border-[#004CE6] focus:outline-none placeholder:text-text-placeholder shadow-none"
-                        placeholder="Your delivery email"
-                    />
-                </div>
+                    {/* Delivery email */}
+                    <div className='flex items-center justify-between gap-2'>
+                        <label htmlFor="email" className='text-text-primary text-sm font-medium'>Delivery email</label>
+                        <Input
+                            id="email"
+                            type="email"
+                            value={changes.email || user?.email}
+                            onChange={(e) => handleInputChange('email', e.target.value)}
+                            className="w-[300px] px-3 py-2.5 text-[16px] text-text-primary border border-[#EAF0FC] rounded-sm focus:ring-1 focus:ring-[#004CE6] focus:border-[#004CE6] focus:outline-none placeholder:text-text-placeholder shadow-none"
+                            placeholder="Your delivery email"
+                        />
+                    </div>
 
-                {/* Update newsletter button */}
-                <div className='flex gap-2'>
-                    <Button
-                        variant='default'
-                        onClick={handleUpdateNewsletter}
-                        disabled={!changes.hasChanges || createNewsletter.status === 'pending' || !newsletterData}
-                        className='w-max bg-[#004CE6] text-white border-none hover:bg-[#004CE6]/90 mt-3 rounded-md disabled:opacity-50 disabled:cursor-not-allowed'
-                    >
-                        {createNewsletter.status === 'pending' ? 'Updating...' : 'Update Newsletter'}
-                    </Button>
+                    {/* Delete newsletter */}
+                    <div className='flex items-center justify-between gap-2 mt-3 bg-layer-2 border border-primary hover:border-secondary rounded-md p-3'>
 
-                    <Button
-                        variant='default'
-                        onClick={() => setIsDeleteModalOpen(true)}
-                        className='w-max bg-[#FF0000] text-white border-none hover:bg-[#FF0000]/90 mt-3 rounded-md disabled:opacity-50 disabled:cursor-not-allowed'
-                    >
-                        Delete Newsletter
-                    </Button>
+                        <div className='flex flex-col'>
+                            <h3 className='text-text-primary text-sm font-medium'>Delete newsletter</h3>
+                            <p className='text-text-secondary text-xs font-normal'>Permanently delete this newsletter and all associated data.</p>
+                        </div>
+
+                        <Button
+                            variant='destructive'
+                            onClick={() => setIsDeleteModalOpen(true)}
+                            className='w-max bg-[#FF0000] font-semibold px-3 py-1 text-sm text-red-500 bg-layer-1 border border-[#eaf0fc] hover:bg-[#FF0000] hover:text-white rounded-md shadow-none'
+                        >
+                            Delete
+                        </Button>
+                    </div>
+
                 </div>
             </main>
 
@@ -188,7 +206,7 @@ const Settings = () => {
                 <DeleteNewsletterModal
                     onClose={() => setIsDeleteModalOpen(false)}
                     type="newsletter"
-                    id={activeNewsletterData?.alert_id}
+                    id={activeNewsletterData?.alert?.alert_id}
                 />
             )}
         </>

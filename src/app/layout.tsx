@@ -8,7 +8,7 @@ import "@/styles/globals.css";
 
 // Metadata = Title, Description, Favicon
 export const metadata: Metadata = {
-  title: "Bynd Alerts",
+  title: "Bynd",
   description: "Bynd fin-tech platform",
   icons: {
     icon: "/ByndLogoFavicon.svg",

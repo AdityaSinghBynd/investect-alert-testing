@@ -75,10 +75,12 @@ export default {
         subtle: "var(--BorderSubtle01)",
       },
       borderColor: {
-        subtle: "#eaf0fc",
+        primary: "var(--BorderSubtle01)",
+        secondary: "var(--BorderSubtle02)",
       },
       boxShadow: {
         "custom-blue": "1px 2px 4px 0px rgba(0, 76, 230, 0.05)",
+        "custom-blue-left": "2px 4px 16px 0px rgba(0, 76, 230, 0.07);",
         'inner-md': '-2px -2px 24px 0px rgba(0, 84, 255, 0.07) inset',
       },
       keyframes: {

@@ -84,7 +84,10 @@ export default function NewsletterModal({ isOpen, onClose }: NewsletterModalProp
         title: settings.name,
         cron_spec: cronSpec,
         user_id: session.user.id,
-        company_ids: config.companies.map(company => company.companyId),
+        companies: config.companies.map(company => ({
+          company_id: company.companyId,
+          context: ""
+        })),
         email: session.user.email
       });
       

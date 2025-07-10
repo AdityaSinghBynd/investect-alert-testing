@@ -40,7 +40,7 @@ export default function SideNavbar() {
   }
   return (
     <>
-      <nav className="w-[250px] h-screen bg-[#f7f9fe] flex flex-col p-3">
+      <nav className="w-[230px] h-screen bg-[#eaf0fc] flex flex-col p-3">
         {/* Logo Section */}
         <header className="flex items-center justify-center gap-2 mb-6">
           <Image src={ByndLogo} alt="Bynd Logo" width={70} height={70} loading="eager" />
@@ -50,34 +50,34 @@ export default function SideNavbar() {
         {/* Create Newsletter Button */}
         <button
           onClick={() => dispatch(setIsNewsletterModalOpen(true))}
-          className="w-full bg-layer-1 text-[#004CE6] border border-[#eaf0fc] hover:bg-[#004CE6] hover:text-white rounded-full py-2 px-4 flex items-center gap-2 transition-colors mb-4">
-          <Plus className="h-4 w-4" />
-          Create Newsletter
+          className="w-full bg-layer-1 font-semibold text-sm text-button-primary border border-primary hover:bg-button-primary hover:text-white rounded-full py-2 px-4 flex items-center gap-1 transition-colors mb-3 items-center justify-center">
+          <Plus className="h-5 w-5" />
+          Create newsletter
         </button>
 
         {/* Home Link */}
         <Link
           href="/"
-          className={`flex items-center gap-2 p-2 mb-4 rounded-md transition-colors border hover:bg-layer-1 hover:text-text-primary hover:border-[#eaf0fc] ${pathname === "/"
-            ? "bg-layer-1 border-[#eaf0fc] text-text-primary"
+          className={`flex items-center gap-2 p-2 mb-2 rounded-md transition-colors text-sm border hover:bg-layer-1 hover:text-text-primary hover:border-secondary ${pathname === "/"
+            ? "bg-layer-1 border-secondary text-text-primary"
             : "border-transparent text-text-secondary"
             }`}
         >
-          <Home size={20} />
+          <Home size={18} />
           <span>Home</span>
         </Link>
 
         {/* Navigation Links */}
-        <div className="flex flex-col gap-1">
-          <h3 className="text-md font-medium text-text-primary mb-1">Your Newsletters</h3>
+        <div className="flex flex-col gap-1 space-y-1">
+          <h3 className="text-sm font-semibold text-text-primary">Your Newsletters</h3>
 
           {newslettersList && newslettersList.length > 0 ? (
             newslettersList.map((alert) => (
               <button
                 key={alert.alert_id}
                 onClick={() => handleNavLinkClick(alert.alert_id)}
-                className={`flex items-center gap-2 p-2 rounded-md transition-colors border hover:bg-layer-1 hover:text-text-primary hover:border-[#eaf0fc] ${pathname.includes(`/newsletter/${alert.alert_id}`)
-                  ? "bg-layer-1 border-[#eaf0fc] text-text-primary"
+                className={`flex items-center gap-2 p-2 rounded-md transition-colors text-sm border hover:bg-layer-1 duration-0 hover:text-text-primary hover:border-secondary ${pathname.includes(`/newsletter/${alert.alert_id}`)
+                  ? "bg-layer-1 border-secondary text-text-primary"
                   : "border-transparent text-text-secondary"
                   }`}
               >
@@ -86,15 +86,15 @@ export default function SideNavbar() {
             ))
           ) : (
             <div className="flex flex-col items-center justify-center gap-2 h-[100px]">
-              <span className="text-sm text-text-secondary">No newsletters found</span>
+              <span className="text-sm text-text-secondary">No newsletters created</span>
             </div>
           )}
         </div>
 
         {/* User Profile Section */}
-        <footer className="mt-auto flex items-center justify-between">
-          <div className="flex items-center w-full gap-3">
-            <div className="w-8 h-8 rounded-full bg-[#004CE6]/80 flex items-center justify-center text-white font-medium">
+        <footer className="mt-auto flex items-center justify-between bg-[#ffffff]/30 border border-[#D4E1FF] rounded-md p-2">
+          <div className="flex items-center w-full gap-2">
+            <div className="w-6 h-6 rounded-full bg-[#004CE6]/80 flex items-center justify-center text-white font-medium">
               {(user?.email?.charAt(0) || "?").toUpperCase()}
             </div>
             <div className="flex flex-col">

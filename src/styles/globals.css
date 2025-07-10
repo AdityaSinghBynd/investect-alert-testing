@@ -38,8 +38,8 @@
     --TextPlaceholder: #9babc7;
     --TextError: #d92d20;
     --ButtonPrimary: #004CE6;
-    --BorderSubtle01: 1px solid #eaf0fc;
-    --BorderSubtle02: 2px dashed #DEE6F5;
+    --BorderSubtle01: #eaf0fc;
+    --BorderSubtle02: #DEE6F5;
     --BorderTransparent: 1px solid transparent;
   }
   .dark {

@@ -63,14 +63,13 @@ const AlertArea = () => {
         const faviconUrl = getFaviconUrl(url)
 
         return (
-            <Link href={url} target='_blank' key={index} className="flex items-center gap-1 bg-layer-1 px-2 py-1 rounded-md border border-[#EAF0FC]">
+            <Link href={url} target='_blank' key={index} className="flex items-center gap-1 bg-layer-1 px-2 py-1 rounded-md border border-gray-200">
                 {faviconUrl && (
                     <Image
                         src={faviconUrl}
                         alt={name}
-                        width={20}
-                        height={20}
-                        className="rounded-sm"
+                        width={18}
+                        height={18}
                         onError={(e) => {
                             e.currentTarget.style.display = 'none'
                         }}
@@ -82,15 +81,15 @@ const AlertArea = () => {
     }
 
     const renderNewsItem = (newsItem: NewsItem, newsIndex: number) => (
-        <div key={newsIndex} className="mb-8">
-            <h3 className="text-lg font-medium text-text-primary mb-2 leading-tight">
+        <div key={newsIndex} className="mb-6">
+            <h3 className="text-md font-semibold text-text-primary mb-2 leading-tight">
                 {newsItem.title}
             </h3>
 
-            <ul className="space-y-1 mb-6">
+            <ul className="space-y-1 mb-3">
                 {newsItem.keyPoints.map((point, pointIndex) => (
-                    <li key={pointIndex} className="flex items-start gap-2 leading-6">
-                        <div className="w-1.5 h-1.5 bg-[#edf1f3] rounded-full mt-2 flex-shrink-0"></div>
+                    <li key={pointIndex} className="flex items-start gap-1.5 leading-tight">
+                        <div className="w-1 h-1 bg-[#4e5971] rounded-full mt-2 flex-shrink-0"/>
                         <span className="text-sm text-text-secondary leading-relaxed">{point}</span>
                     </li>
                 ))}
@@ -109,10 +108,10 @@ const AlertArea = () => {
         if (!company.news?.length) return null
 
         return (
-            <div key={company.id} className="mb-12">
-                <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-[#328589] mb-2">
-                        {company.name}
+            <div key={company.id} className="mb-6">
+                <div className="mb-4">
+                    <h2 className="text-md font-semibold text-[#328589] mb-2">
+                        {company.name}:
                     </h2>
                 </div>
 
@@ -122,6 +121,28 @@ const AlertArea = () => {
                     )}
                 </div>
             </div>
+        )
+    }
+
+    const renderTopHeadlines = (companies: CompanyWithNews[]) => {
+
+        return (
+            <div className="space-y-3">
+                    {companies.map((company) => 
+                        company.news?.map((newsItem, index) => (
+                            <div key={`${company.id}-${index}`} className="flex flex-col gap-2">
+                                <div className="flex items-center justify-start gap-3">
+                                    <p className="text-sm text-text-primary font-semibold">{newsItem.title}</p>
+                                    <div className="flex items-center gap-2 flex-shrink-0">
+                                        {newsItem.sources.map((source, sourceIndex) =>
+                                            renderSource(source, sourceIndex)
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
         )
     }
 
@@ -135,36 +156,53 @@ const AlertArea = () => {
     }
 
     return (
-        <div className="max-w-7xl mx-auto my-3 border border-[#EAF0FC] bg-[#f7f9fe] rounded-lg">
+        <div className="max-w-7xl mx-auto my-3 border border-primary bg-layer-2 rounded-lg">
+
             {/* Header */}
-            <header className='flex justify-between items-center border-b border-[#EAF0FC] rounded-t-lg px-3 py-2 bg-layer-1'>
+            <header className='flex justify-between items-center border-b border-primary rounded-t-lg px-3 py-2 bg-layer-1'>
                 <div className='flex items-center gap-2'>
                     <ArrowLeft className='text-text-primary w-5 h-5 cursor-pointer' onClick={handleBackToNewsletter} />
                     <p className='text-[14px] font-medium text-text-primary'>{selectedRun.date}</p>
                 </div>
 
-                <div className='flex items-center gap-3'>
-                    <div
-                        className='flex items-center gap-2 text-[14px] font-medium text-text-primary cursor-pointer hover:bg-blue-50 px-2 py-1 rounded-md transition-colors'
-                        onClick={handleSendEmailClick}
-                    >
-                        <Mail className='text-text-primary w-4 h-4' />
-                        Send as email
-                    </div>
+                <div
+                    className='flex items-center gap-2 text-[14px] font-medium text-text-primary border border-transparent cursor-pointer hover:border-primary hover:bg-layer-3 px-2 py-1.5 rounded-md transition-colors'
+                    onClick={handleSendEmailClick}
+                >
+                    <Mail className='text-text-primary w-4 h-4' />
+                    Send as email
                 </div>
             </header>
 
             {/* Main email content */}
-            <main className='flex flex-col items-start justify-start max-w-5xl max-h-[90vh] mx-auto mt-5 bg-layer-1 overflow-y-auto scrollbar-hide'>
-                <Image src={CompanyBanner} alt='company banner' className='w-full h-42 object-fit' />
-                
-                <div className="flex flex-col px-8 py-6 w-full">
-                    <p className="text-sm font-medium text-text-secondary mb-2">{selectedRun.date}</p>
+            <main className='flex flex-col items-start justify-start max-w-5xl max-h-[90vh] mx-auto mt-5 pb-[100px] bg-layer-1 overflow-y-auto scrollbar-hide shadow-lg'>
 
-                    <div className="w-full bg-[#EDF1F3] p-4">
+                {/* Company Banner */}
+                <Image src={CompanyBanner} alt='company banner' className='w-full h-42 object-fit' />
+
+                {/* Company News */}
+                <div className="flex flex-col px-8 py-6 mt-6 w-full border-t border-[#328589]">
+                    {/* Date */}
+                    <p className="text-sm text-text-secondary mb-6">{selectedRun.date}</p>
+
+                    {/* Top Headlines */}
+                    <div className="w-full bg-[#fbfbfb] p-4">
+                        <p className="text-md text-[#328589] font-bold mb-5">Good morning,</p>
+                        {renderTopHeadlines(companiesWithNews)}
+                    </div>
+
+                    {/* News Snippets */}
+                    <div className="w-full bg-[#edf1f3] border-t border-gray-200 p-4">
+                        <p className="text-md text-[#328589] font-bold mb-5">News snippets</p>
                         {companiesWithNews.map(company => renderCompany(company))}
                     </div>
                 </div>
+
+                {/* Footer */}
+                <footer className='flex flex-col items-start gap-1 ml-8 bg-layer-1'>
+                    <p className='text-sm font-semibold text-[#328589]'>Investec Research</p>
+                    <p className='text-sm text-text-secondary italic'>Access to our recent reports</p>
+                </footer>
             </main>
 
             {/* Send Email Modal */}
