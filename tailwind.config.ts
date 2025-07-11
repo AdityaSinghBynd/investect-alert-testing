@@ -55,6 +55,7 @@ export default {
           "1": "var(--Layer01)",
           "2": "var(--Layer02)",
           "3": "var(--Layer03)",
+          "4": "var(--Layer04)",
         },
         text: {
           primary: "var(--TextPrimary)",

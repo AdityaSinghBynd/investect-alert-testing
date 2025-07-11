@@ -119,7 +119,7 @@ export default function NewsletterModal({ isOpen, onClose }: NewsletterModalProp
           <X className="h-5 w-5 cursor-pointer text-text-primary" onClick={onClose} />
         </header>
 
-        <main className="p-3 flex-1 overflow-hidden">
+        <main className="flex-1 overflow-hidden">
           {step === "search" && (
             <CompanySearch
               selectedCompanies={config.companies}

@@ -61,7 +61,7 @@ const CompanyCard: React.FC<CompanyWithAlertData & { alertId: string, setIsDelet
 
                 <div className="flex flex-col">
                     <h3 className="text-text-primary font-medium">{name}</h3>
-                    <span className="text-text-secondary text-sm">{sector}</span>
+                    <span className="text-text-secondary text-sm truncate max-w-[230px]">{sector}</span>
                 </div>
 
                 <DropdownMenu open={open} onOpenChange={setOpen}>

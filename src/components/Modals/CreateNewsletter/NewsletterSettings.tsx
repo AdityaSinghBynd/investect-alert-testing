@@ -6,6 +6,7 @@ import { NewsletterConfig } from "./index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { TimePicker } from "@/components/ui/dateAndTimePicker";
 // Images
 import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 // Hooks
@@ -43,7 +44,7 @@ export default function NewsletterSettings({
 
   return (
     <section className="h-full flex flex-col justify-between gap-3">
-      <div className="space-y-4 pb-2">
+      <div className="space-y-4 m-3 mt-2">
 
         <div className="space-y-2">
           <label
@@ -86,17 +87,16 @@ export default function NewsletterSettings({
           >
             Time
           </label>
-          <Input
+          <TimePicker
             id="time"
-            type="time"
             value={settings.time}
+            onChange={(value) => handleChange("time", value)}
             className="shadow-none border-[#eafofc] text-text-primary"
-            onChange={(e) => handleChange("time", e.target.value)}
           />
         </div>
       </div>
 
-      <div className="flex justify-between items-center border-t border-[#eaf0fc] pt-2">
+      <div className="flex justify-between items-center border-t border-[#eaf0fc] px-3 py-2">
         <Button variant="outline" className="text-text-primary border-[#eaf0fc] shadow-none hover:bg-[#eaf0fc]" onClick={onBack}>
           <ArrowLeft className="h-4 w-4 text-text-primary" /> Back
         </Button>

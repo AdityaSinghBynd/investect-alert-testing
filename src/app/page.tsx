@@ -73,10 +73,10 @@ export default function Home() {
   }
 
   return (
-    <main className='flex bg-[#eaf0fc] min-h-screen w-full'>
+    <main className='flex bg-layer-4 min-h-screen w-full'>
       <div className="w-full bg-[#FFFFFFCC] m-3 ml-0 rounded-lg pt-7 pb-[100px] px-10 overflow-y-auto scrollbar-hide">
         <header className='mb-4'>
-          <h1 className="text-[28px] font-medium text-text-primary">Hello {userName ? userName : 'Person'}!!</h1>
+          <h1 className="text-[24px] font-medium text-text-primary">Hello {userName ? userName : 'Person'}!!</h1>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

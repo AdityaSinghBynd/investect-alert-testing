@@ -40,7 +40,7 @@ export default function SideNavbar() {
   }
   return (
     <>
-      <nav className="w-[230px] h-screen bg-[#eaf0fc] flex flex-col p-3">
+      <nav className="w-[230px] h-screen bg-layer-4 flex flex-col p-3">
         {/* Logo Section */}
         <header className="flex items-center justify-center gap-2 mb-6">
           <Image src={ByndLogo} alt="Bynd Logo" width={70} height={70} loading="eager" />
@@ -50,7 +50,7 @@ export default function SideNavbar() {
         {/* Create Newsletter Button */}
         <button
           onClick={() => dispatch(setIsNewsletterModalOpen(true))}
-          className="w-full bg-layer-1 font-semibold text-sm text-button-primary border border-primary hover:bg-button-primary hover:text-white rounded-full py-2 px-4 flex items-center gap-1 transition-colors mb-3 items-center justify-center">
+          className="w-full bg-layer-3 font-semibold text-sm text-button-primary border border-primary hover:bg-layer-1 hover:border-secondary rounded-full py-2 px-4 flex items-center gap-1 transition-colors mb-3 items-center justify-center">
           <Plus className="h-5 w-5" />
           Create newsletter
         </button>
@@ -59,7 +59,7 @@ export default function SideNavbar() {
         <Link
           href="/"
           className={`flex items-center gap-2 p-2 mb-2 rounded-md transition-colors text-sm border hover:bg-layer-1 hover:text-text-primary hover:border-secondary ${pathname === "/"
-            ? "bg-layer-1 border-secondary text-text-primary"
+            ? "bg-layer-3 border-secondary text-text-primary"
             : "border-transparent text-text-secondary"
             }`}
         >
@@ -77,7 +77,7 @@ export default function SideNavbar() {
                 key={alert.alert_id}
                 onClick={() => handleNavLinkClick(alert.alert_id)}
                 className={`flex items-center gap-2 p-2 rounded-md transition-colors text-sm border hover:bg-layer-1 duration-0 hover:text-text-primary hover:border-secondary ${pathname.includes(`/newsletter/${alert.alert_id}`)
-                  ? "bg-layer-1 border-secondary text-text-primary"
+                  ? "bg-layer-3 border-secondary text-text-primary"
                   : "border-transparent text-text-secondary"
                   }`}
               >
@@ -92,7 +92,7 @@ export default function SideNavbar() {
         </div>
 
         {/* User Profile Section */}
-        <footer className="mt-auto flex items-center justify-between bg-[#ffffff]/30 border border-[#D4E1FF] rounded-md p-2">
+        <footer className={`mt-auto flex items-center justify-between border rounded-md p-2 ${isSettingsPath ? "bg-layer-2 border-secondary" : "bg-layer-4 border-transparent"}`}>
           <div className="flex items-center w-full gap-2">
             <div className="w-6 h-6 rounded-full bg-[#004CE6]/80 flex items-center justify-center text-white font-medium">
               {(user?.email?.charAt(0) || "?").toUpperCase()}

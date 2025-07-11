@@ -80,7 +80,7 @@ export default function CompanySearch({
 
   return (
     <section className="flex flex-col h-full space-y-2">
-      <div className="relative" ref={dropdownRef}>
+      <div className="relative m-3 mb-0" ref={dropdownRef}>
         <Input
           type="text"
           placeholder="Search your companies"
@@ -96,7 +96,7 @@ export default function CompanySearch({
             {filteredCompanies.map((company) => (
               <div
                 key={company.companyId}
-                className="flex items-center gap-2 p-3 hover:bg-[#f7f9fe] cursor-pointer transition-colors"
+                className="flex items-center gap-2 p-3 border-b border-[#eaf0fc] hover:bg-[#f7f9fe] cursor-pointer transition-colors"
                 onClick={() => handleCompanySelect(company)}
               >
                 <Image
@@ -116,7 +116,7 @@ export default function CompanySearch({
         )}
       </div>
 
-      <div className="flex-1 overflow-y-auto bg-layer-2 rounded-lg p-3">
+      <div className="flex-1 overflow-y-auto bg-layer-3 rounded-lg m-3 p-3">
         {companies.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {companies.map((company) => (
@@ -153,7 +153,7 @@ export default function CompanySearch({
               height={180}
             />
             <p className="text-center text-text-placeholder text-sm">
-              {isLoading ? "Loading companies..." : "Nothing added yet"}
+              No companies added yet
             </p>
           </div>
         )}
@@ -184,7 +184,7 @@ export default function CompanySearch({
       )} */}
 
       {/* Footer */}
-      <div className="flex items-center justify-between border-t border-[#eaf0fc] pt-2 w-full">
+      <div className="flex items-center justify-between border-t border-[#eaf0fc] px-3 py-2 w-full">
         <p className="text-sm text-[#004CE6] font-medium">
           {companies.length} selected
         </p>

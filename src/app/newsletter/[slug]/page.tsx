@@ -24,14 +24,14 @@ export default function NewsletterPage() {
     const activeNewsletter = newsletterData?.find((newsletter) => newsletter.alert?.alert_id === slug.slug);
 
     return (
-        <main className='flex bg-[#eaf0fc] min-h-screen w-full overflow-hidden'>
+        <main className='flex bg-layer-4 min-h-screen w-full overflow-hidden'>
             <div className="w-full bg-[#FFFFFFCC] m-3 ml-0 rounded-lg py-7 px-10 shadow-custom-blue-left">
 
                 {/* Title and Tabs of the newsletter */}
 
                 {newsletterContent === "newsletter-tabContent" ? (
                     <>
-                        <h1 className="text-[28px] font-medium text-text-primary mb-4">{activeNewsletter?.alert?.title}</h1>
+                        <h1 className="text-[24px] font-medium text-text-primary mb-4">{activeNewsletter?.alert?.title}</h1>
                         <Tabs defaultValue="history" className="w-full">
 
                             <TabsList className='p-0 mb-2 bg-transparent border-b border-primary rounded-none items-end'>

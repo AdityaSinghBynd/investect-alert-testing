@@ -35,7 +35,7 @@ export default function CompanyPage() {
   } = useFetchReceivedAlertsByCompanyID(payload);
 
   return (
-    <main className='flex bg-[#eaf0fc] min-h-screen w-full'>
+    <main className='flex bg-layer-4 min-h-screen w-full'>
       <div className="w-full bg-[#FFFFFFCC] m-3 ml-0 rounded-lg py-7 px-10 shadow-custom-blue-left h-[calc(100vh-24px)] flex flex-col">
 
         {/* Header */}
