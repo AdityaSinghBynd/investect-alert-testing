@@ -311,13 +311,6 @@ const History = () => {
               <TableRow className='h-[200px] bg-layer-1 hover:bg-layer-2 border border-primary text-md text-text-primary text-center'>
                 <TableCell colSpan={4} className="text-center py-12">
                   <div className="flex flex-col items-center gap-3">
-                    <Image
-                      src={noData}
-                      alt="No data"
-                      width={64}
-                      height={64}
-                      className="opacity-50"
-                    />
                     <div className="text-text-secondary">
                       {selectedCompanies.length > 0
                         ? 'No alerts found for selected companies'
