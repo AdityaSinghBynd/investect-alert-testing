@@ -55,7 +55,7 @@ export default function NewsletterPage() {
                             </TabsContent>
 
                             {/* Companies */}
-                            <TabsContent value="companies" className='h-[calc(100vh-100px)] overflow-y-auto scrollbar-hide pb-[100px]'>
+                            <TabsContent value="companies" className='h-[calc(100vh-200px)] overflow-y-auto scrollbar-hide pb-[100px]'>
                                 <CompaniesComponent />
                             </TabsContent>
 

@@ -138,6 +138,7 @@ export default function NewsletterModal({ isOpen, onClose }: NewsletterModalProp
                 time: config.time
               }}
               onSubmit={handleSettingsSubmit}
+              isSubmitting={createNewsletter.isPending}
             />
           )}
         </main>

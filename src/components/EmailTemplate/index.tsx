@@ -89,7 +89,7 @@ const AlertArea = () => {
             <ul className="space-y-1 mb-3">
                 {newsItem.keyPoints.map((point, pointIndex) => (
                     <li key={pointIndex} className="flex items-start gap-1.5 leading-tight">
-                        <div className="w-1 h-1 bg-[#4e5971] rounded-full mt-2 flex-shrink-0"/>
+                        <div className="w-1 h-1 bg-[#4e5971] rounded-full mt-2.5 flex-shrink-0"/>
                         <span className="text-sm text-text-secondary leading-relaxed">{point}</span>
                     </li>
                 ))}

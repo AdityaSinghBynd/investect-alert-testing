@@ -4,16 +4,35 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
+// Images
+import { MoreVertical, Plus, Trash } from 'lucide-react'
 // Components
 import DeleteCompanyModal from '@/components/Modals/Actions/Delete'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/store';
+import { setIsNewsletterModalOpen } from '@/redux/Modals/Newsletter/newsletterModalSlice'
 import { setNewsletterData } from '@/redux/Newsletter/newsletterSlice';
 // Types
 import { CompanyWithAlertData } from '@/hooks/Newsletter/newsletter.interface';
-import { MoreVertical, Trash } from 'lucide-react'
+interface AddCompanyCardProps {
+    className?: string
+}
+
+// const AddCompanyCard: React.FC<AddCompanyCardProps> = ({ className = '' }) => {
+//     const dispatch = useDispatch()
+
+//     return (
+//         <button
+//             onClick={() => dispatch(setIsNewsletterModalOpen(true))}
+//             className={`p-6 bg-[#f7f9fe] text-[#001742] rounded-lg border border-[#eaf0fc] transition-all w-full h-full flex flex-col items-center justify-center gap-2 min-h-[160px] hover:text-[#004CE6] ${className}`}
+//             aria-label="Add new company"
+//         >
+//             <Plus className="w-7 h-7" />
+//         </button>
+//     )
+// }
 
 const CompanyCard: React.FC<CompanyWithAlertData & { alertId: string, setIsDeleteModalOpen: (isOpen: boolean) => void, company_id: string }> = ({ logo, name, sector, company_id, alertId, setIsDeleteModalOpen }) => {
     const [open, setOpen] = useState(false);
@@ -107,6 +126,7 @@ const Companies = () => {
     return (
         <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ">
+                {/* <AddCompanyCard /> */}
                 {Array.isArray(activeNewsletterCompanyData?.companies) && activeNewsletterCompanyData?.companies.map((company) => (
                     <CompanyCard
                         key={company.company_id}

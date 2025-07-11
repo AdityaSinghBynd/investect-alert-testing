@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 // Images
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 // Hooks
 import { useNewsletterOperations } from "@/hooks/NewsletterOperations/useNewsletterOperations";
 // Interfaces
@@ -15,18 +15,30 @@ interface NewsletterSettingsProps {
   initialValues: Pick<NewsletterConfig, "name" | "frequency" | "time">;
   onBack: () => void;
   onSubmit: (settings: Pick<NewsletterConfig, "name" | "frequency" | "time">) => void;
+  isSubmitting?: boolean;
 }
 
 export default function NewsletterSettings({
   initialValues,
   onBack,
-  onSubmit
+  onSubmit,
+  isSubmitting = false
 }: NewsletterSettingsProps) {
   const [settings, setSettings] = useState(initialValues);
   const { createNewsletter } = useNewsletterOperations();
 
   const handleChange = (field: keyof typeof settings, value: string) => {
     setSettings(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleFrequencyChange = (value: string) => {
+    // Convert the tab value to proper frequency format
+    const frequencyMap: { [key: string]: "Daily" | "Weekly" | "Monthly" } = {
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly"
+    };
+    handleChange("frequency", frequencyMap[value]);
   };
 
   return (
@@ -53,10 +65,14 @@ export default function NewsletterSettings({
           <label className="text-sm font-medium text-text-primary">
             Frequency
           </label>
-          <Tabs defaultValue="daily" className="max-w-max">
+          <Tabs 
+            defaultValue="daily" 
+            value={settings.frequency.toLowerCase()}
+            onValueChange={handleFrequencyChange}
+            className="max-w-max"
+          >
             <TabsList className='p-1 bg-[#eaf0fc] rounded-md gap-2'>
               <TabsTrigger value="daily" className='text-text-secondary text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Daily</TabsTrigger>
-              {/* <TabsTrigger value="bi-weekly" className='text-text-secondary text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Bi-weekly</TabsTrigger> */}
               <TabsTrigger value="weekly" className='text-text-secondary text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Weekly</TabsTrigger>
               <TabsTrigger value="monthly" className='text-text-secondary text-sm font-normal rounded-md shadow-none border border-[#eaf0fc]'>Monthly</TabsTrigger>
             </TabsList>
@@ -86,10 +102,14 @@ export default function NewsletterSettings({
         </Button>
         <Button
           onClick={() => onSubmit(settings)}
-          disabled={!settings.name || !settings.frequency || !settings.time}
+          disabled={!settings.name || !settings.frequency || !settings.time || isSubmitting}
           className="bg-[#004CE6] text-white border-none hover:bg-[#004CE6]/90 rounded-md"
         >
-          {createNewsletter.isPending ? "Creating..." : "Finish"} <ArrowRight className="h-4 w-4" />
+          {isSubmitting ? (
+            <>Create <Loader2 className="h-4 w-4 ml-1 animate-spin" /></>
+          ) : (
+            <>Create <ArrowRight className="h-4 w-4 ml-1" /></>
+          )}
         </Button>
       </div>
 
