@@ -265,7 +265,7 @@ const AlertArea = () => {
                 </div>
 
                 <div
-                    className='flex items-center gap-2 text-[14px] font-medium text-text-primary border border-transparent cursor-pointer hover:border-primary hover:bg-layer-3 px-2 py-1.5 rounded-md transition-colors'
+                    className='flex items-center gap-2 text-[14px] font-medium text-text-primary border border-transparent cursor-pointer hover:border-secondary hover:bg-layer-3 px-2 py-1.5 rounded-md transition-colors'
                     onClick={handleSendEmailClick}
                 >
                     <Mail className='text-text-primary w-4 h-4' />

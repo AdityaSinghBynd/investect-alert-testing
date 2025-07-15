@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useMemo } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
@@ -66,6 +67,12 @@ export default function Home() {
 
   }, [newsletterData, newsletterHistoryData]);
 
+  const filteredProcessedNewsletterData = useMemo(() => {
+    return processedNewsletterData.filter((newsletter) => 
+      newsletter.companies.some(company => company.news && company.news.length > 0)
+    );
+  }, [processedNewsletterData]);
+
   const handleNewsletterClick = (newsletterId: string) => {
     dispatch(setNewsletterContent("newsletter-tabContent"))
     dispatch(setActiveNewsletter(newslettersList.find((newsletter) => newsletter.alert?.alert_id === newsletterId)))
@@ -76,12 +83,13 @@ export default function Home() {
     <main className='flex bg-layer-4 min-h-screen w-full'>
       <div className="w-full bg-[#FFFFFFCC] m-3 ml-0 rounded-lg pt-7 pb-[100px] px-10 overflow-y-auto scrollbar-hide">
         <header className='mb-4'>
-          <h1 className="text-[24px] font-medium text-text-primary">Hello {userName ? userName : 'Person'}!!</h1>
+          <h1 className="text-[24px] font-medium text-text-primary">Hello {userName ? userName : 'Person'}, Here are your recent deliveries</h1>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {processedNewsletterData.length > 0 ? (
-            processedNewsletterData.map((newsletter, index) => (
+       <h2 className='text-xl font-medium text-text-primary mb-2'>Today</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-h-[calc(100vh-100px)] pb-[150px] overflow-y-auto scrollbar-hide">
+          {filteredProcessedNewsletterData.length > 0 ? (
+            filteredProcessedNewsletterData.map((newsletter, index) => (
               <div onClick={() => handleNewsletterClick(newsletter.id)} key={index} className='flex flex-col gap-2.5 border border-primary rounded-xl p-3 w-full min-h-[250px] max-h-[300px] bg-layer-1 hover:bg-layer-2 hover:border-secondary hover:shadow-custom-blue transition-shadow duration-200 cursor-pointer'>
                 {/* Newsletter Title */}
                 <h2 className='text-xl font-medium text-text-primary'>{newsletter.title}</h2>
@@ -89,8 +97,10 @@ export default function Home() {
                 {/* Companies Grid */}
                 <div className="flex flex-wrap gap-2">
                   {newsletter.companies.map((company) => (
-                    <div
+                    <Link
+                      href={`/newsletter/${newsletter.id}/${company.id}`}
                       key={company.id}
+                      onClick={(e) => e.stopPropagation()}
                       className="flex items-center justify-center gap-2 px-2 py-1 rounded-md border border-primary bg-layer-1 hover:border-secondary transition-colors duration-200 max-w-max"
                     >
                       {company.logo ? (
@@ -107,14 +117,14 @@ export default function Home() {
                       <span className="text-sm font-medium text-text-primary truncate">
                         {company.name}
                       </span>
-                    </div>
+                    </Link>
                   ))}
                 </div>
 
                 {/* Top Headlines */}
                 <div className="flex flex-col gap-1">
                   <h3 className="text-md font-medium text-text-primary">Top headlines</h3>
-                  <div className="flex flex-col gap-1">
+                  <div className="flex flex-col gap-1 overflow-y-auto scrollbar-hide max-h-[120px]">
                     {newsletter.companies.map(company =>
                       company.news.map((headline, idx) => (
                         <p key={`${company.id}-${idx}`} className="text-sm text-text-secondary">

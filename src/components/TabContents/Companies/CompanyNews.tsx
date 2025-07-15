@@ -9,12 +9,13 @@ import { getCleanDomainName, getFaviconUrl } from '@/utils/getFaviconUtils';
 // Interfaces
 import { FetchReceivedAlertsByCompanyIDResponse } from '@/hooks/Newsletter/newsletter.interface';
 interface CompanyNewsProps {
-  data: FetchReceivedAlertsByCompanyIDResponse | undefined;
+  receivedAlertsDataByCompanyID: FetchReceivedAlertsByCompanyIDResponse | undefined;
   isLoading: boolean;
 }
 
 
-export default function CompanyNews({ data, isLoading }: CompanyNewsProps) {
+export default function CompanyNews({ receivedAlertsDataByCompanyID, isLoading }: CompanyNewsProps) {
+  console.log(receivedAlertsDataByCompanyID)
   if (isLoading) {
     return (
         <TableSkeleton />
@@ -22,7 +23,7 @@ export default function CompanyNews({ data, isLoading }: CompanyNewsProps) {
   }
 
   // Group news by run date
-  const newsGroupedByRun = data?.runs.reduce((acc, run) => {
+  const newsGroupedByRun = receivedAlertsDataByCompanyID?.runs.reduce((acc, run) => {
     const date = format(parseISO(run.timestamp), 'dd MMMM');
     const news = run.companies.flatMap(company => company.news || []);
     

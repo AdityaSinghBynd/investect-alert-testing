@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -10,7 +10,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { Home, Settings, Plus } from "lucide-react";
 import ByndLogo from "../../../../../public/images/ByndLogo.svg";
 // Components
-import DeleteNewsletterModal from "@/components/Modals/Actions/Delete";
 import NewsletterModal from "@/components/Modals/CreateNewsletter";
 // Redux
 import { RootState } from "@/redux/store";
@@ -29,7 +28,6 @@ export default function SideNavbar() {
   const { data: session } = useSession();
   const user = session?.user as SessionUser;
   const isSettingsPath = pathname === "/settings";
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const isNewsletterModalOpen = useSelector((state: RootState) => state.newsletterModal.isNewsletterModalOpen);
   const newslettersList = useSelector((state: RootState) => state.newsletter.newsletterList);
 
@@ -119,14 +117,6 @@ export default function SideNavbar() {
         />
       )}
 
-      {/* Delete Newsletter Modal */}
-      {isDeleteModalOpen && (
-        <DeleteNewsletterModal
-          onClose={() => setIsDeleteModalOpen(false)}
-          type="newsletter"
-          id={newslettersList?.find((newsletter) => newsletter.alert?.alert_id === pathname.split("/").pop())?.alert?.alert_id}
-        />
-      )}
     </>
   );
 }
