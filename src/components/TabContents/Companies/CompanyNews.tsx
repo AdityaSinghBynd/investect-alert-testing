@@ -78,8 +78,8 @@ export default function CompanyNews({ receivedAlertsDataByCompanyID, isLoading }
             {/* Table Header */}
             <TableHeader>
               <TableRow className="bg-[#F3F6FF] hover:bg-[#F3F6FF] border-b border-[#eaf0fc]">
+                <TableHead className="text-text-primary font-medium border-r border-[#eaf0fc]">Headline</TableHead>
                 <TableHead className="text-text-primary font-medium border-r border-[#eaf0fc]">News</TableHead>
-                <TableHead className="text-text-primary font-medium border-r border-[#eaf0fc]">Description</TableHead>
                 <TableHead className="text-text-primary font-medium border-r border-[#eaf0fc]">Sources</TableHead>
               </TableRow>
             </TableHeader>
@@ -89,7 +89,7 @@ export default function CompanyNews({ receivedAlertsDataByCompanyID, isLoading }
               {runData.news.map((news: any, index: number) => (
                 <TableRow key={index} className="hover:bg-[#f7f9fe] border-b border-[#eaf0fc]">
 
-                  <TableCell className="text-text-primary border-r border-[#eaf0fc] min-w-[250px] max-w-[250px] align-top">
+                  <TableCell className="text-text-primary font-medium border-r border-[#eaf0fc] min-w-[250px] max-w-[250px] align-top">
                     {news.title}
                   </TableCell>
 
