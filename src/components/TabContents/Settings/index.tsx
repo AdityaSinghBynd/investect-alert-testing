@@ -35,24 +35,24 @@ const Settings = () => {
     const activeNewsletterData = newsletterData?.find((newsletter) => newsletter.alert?.alert_id === slug.slug);
     const { createNewsletter } = useNewsletterOperations();
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
+    console.log("activeNewsletterData", activeNewsletterData)
     // Get initial frequency from cron expression
-    const initialFrequency = getCronFrequency(activeNewsletterData?.cron_spec || '');
+    const initialFrequency = getCronFrequency(activeNewsletterData?.alert?.cron_spec || '');
 
     // State to track changes
     const [changes, setChanges] = useState<NewsletterChanges>({
         frequency: initialFrequency,
-        title: activeNewsletterData?.title || '',
-        email: activeNewsletterData?.email || '',
+        title: activeNewsletterData?.alert?.title || '',
+        email: activeNewsletterData?.alert?.email || '',
         hasChanges: false
     });
 
     // Reset changes when activeNewsletter changes
     useEffect(() => {
         setChanges({
-            frequency: getCronFrequency(activeNewsletterData?.cron_spec || ''),
-            title: activeNewsletterData?.title || '',
-            email: activeNewsletterData?.email || '',
+            frequency: getCronFrequency(activeNewsletterData?.alert?.cron_spec || ''),
+            title: activeNewsletterData?.alert?.title || '',
+            email: activeNewsletterData?.alert?.email || '',
             hasChanges: false
         });
     }, [activeNewsletterData?.alert_id]);
@@ -62,8 +62,8 @@ const Settings = () => {
             ...prev,
             frequency: newFrequency,
             hasChanges: newFrequency !== initialFrequency ||
-                prev.title !== activeNewsletterData?.title ||
-                prev.email !== activeNewsletterData?.email
+                prev.title !== activeNewsletterData?.alert?.title ||
+                prev.email !== activeNewsletterData?.alert?.email
         }));
     };
 
@@ -71,9 +71,9 @@ const Settings = () => {
         setChanges(prev => ({
             ...prev,
             [field]: value,
-            hasChanges: value !== (activeNewsletterData?.[field] || '') ||
+            hasChanges: value !== (activeNewsletterData?.alert?.[field] || '') ||
                 prev.frequency !== initialFrequency ||
-                (field === 'title' ? prev.email !== activeNewsletterData?.email : prev.title !== activeNewsletterData?.title)
+                (field === 'title' ? prev.email !== activeNewsletterData?.alert?.email : prev.title !== activeNewsletterData?.alert?.title)
         }));
     };
 
@@ -85,9 +85,9 @@ const Settings = () => {
             const newCronSpec = generateCronExpression({
                 frequency: changes.frequency,
                 // Extract current hour and minute from existing cron if available
-                ...(activeNewsletterData.cron_spec ? {
-                    hour: parseInt(activeNewsletterData.cron_spec.split(' ')[1]),
-                    minute: parseInt(activeNewsletterData.cron_spec.split(' ')[0])
+                ...(activeNewsletterData.alert.cron_spec ? {
+                    hour: parseInt(activeNewsletterData.alert.cron_spec.split(' ')[1]),
+                    minute: parseInt(activeNewsletterData.alert.cron_spec.split(' ')[0])
                 } : {})
             });
 
